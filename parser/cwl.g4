@@ -17,7 +17,7 @@ in_or_out           : (identification | name) type_ (doc)?;
 run                 : 'run:' class_ inputs baseCommand (stdin_ | stdout_)+;
 input_               : name':' (identification | type_ |  doc
                     |  default |  source | label | inputBinding)+;
-output              : (name ':' | identification | type_ | doc
+output              : name ':' (identification | type_ | doc
                     | default | source | label | outputSource)+;
 source              : 'source:' tag;
 name                : WORD;

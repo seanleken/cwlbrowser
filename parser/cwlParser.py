@@ -8,7 +8,7 @@ import sys
 def serializedATN():
     with StringIO() as buf:
         buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3*")
-        buf.write("\u00e8\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
+        buf.write("\u00e7\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
         buf.write("\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\4\16")
         buf.write("\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22\4\23\t\23")
         buf.write("\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31")
@@ -23,22 +23,22 @@ def serializedATN():
         buf.write("\f\3\f\3\f\5\f\u008f\n\f\3\r\3\r\3\r\3\r\3\r\3\r\6\r\u0097")
         buf.write("\n\r\r\r\16\r\u0098\3\16\3\16\3\16\3\16\3\16\3\16\3\16")
         buf.write("\3\16\3\16\6\16\u00a4\n\16\r\16\16\16\u00a5\3\17\3\17")
-        buf.write("\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\6\17\u00b2\n")
-        buf.write("\17\r\17\16\17\u00b3\3\20\3\20\3\20\3\21\3\21\3\22\3\22")
-        buf.write("\3\22\3\23\3\23\3\23\3\23\3\24\3\24\3\24\6\24\u00c5\n")
-        buf.write("\24\r\24\16\24\u00c6\3\25\3\25\3\26\3\26\3\26\3\27\3\27")
-        buf.write("\3\27\3\30\3\30\3\30\3\31\3\31\3\32\3\32\3\32\3\33\3\33")
-        buf.write("\3\33\3\34\3\34\3\34\3\35\3\35\3\35\3\36\3\36\3\36\3\36")
-        buf.write("\3\36\3\36\3\36\3\u00c6\2\37\2\4\6\b\n\f\16\20\22\24\26")
-        buf.write("\30\32\34\36 \"$&(*,.\60\62\64\668:\2\4\3\2\22\26\3\2")
-        buf.write("\35\36\2\u00f1\2<\3\2\2\2\4L\3\2\2\2\6O\3\2\2\2\bR\3\2")
-        buf.write("\2\2\nU\3\2\2\2\f^\3\2\2\2\16g\3\2\2\2\20m\3\2\2\2\22")
-        buf.write("v\3\2\2\2\24\177\3\2\2\2\26\u008a\3\2\2\2\30\u0090\3\2")
-        buf.write("\2\2\32\u009a\3\2\2\2\34\u00b1\3\2\2\2\36\u00b5\3\2\2")
-        buf.write("\2 \u00b8\3\2\2\2\"\u00ba\3\2\2\2$\u00bd\3\2\2\2&\u00c1")
-        buf.write("\3\2\2\2(\u00c8\3\2\2\2*\u00ca\3\2\2\2,\u00cd\3\2\2\2")
-        buf.write(".\u00d0\3\2\2\2\60\u00d3\3\2\2\2\62\u00d5\3\2\2\2\64\u00d8")
-        buf.write("\3\2\2\2\66\u00db\3\2\2\28\u00de\3\2\2\2:\u00e1\3\2\2")
+        buf.write("\3\17\3\17\3\17\3\17\3\17\3\17\3\17\6\17\u00b1\n\17\r")
+        buf.write("\17\16\17\u00b2\3\20\3\20\3\20\3\21\3\21\3\22\3\22\3\22")
+        buf.write("\3\23\3\23\3\23\3\23\3\24\3\24\3\24\6\24\u00c4\n\24\r")
+        buf.write("\24\16\24\u00c5\3\25\3\25\3\26\3\26\3\26\3\27\3\27\3\27")
+        buf.write("\3\30\3\30\3\30\3\31\3\31\3\32\3\32\3\32\3\33\3\33\3\33")
+        buf.write("\3\34\3\34\3\34\3\35\3\35\3\35\3\36\3\36\3\36\3\36\3\36")
+        buf.write("\3\36\3\36\3\u00c5\2\37\2\4\6\b\n\f\16\20\22\24\26\30")
+        buf.write("\32\34\36 \"$&(*,.\60\62\64\668:\2\4\3\2\22\26\3\2\35")
+        buf.write("\36\2\u00ef\2<\3\2\2\2\4L\3\2\2\2\6O\3\2\2\2\bR\3\2\2")
+        buf.write("\2\nU\3\2\2\2\f^\3\2\2\2\16g\3\2\2\2\20m\3\2\2\2\22v\3")
+        buf.write("\2\2\2\24\177\3\2\2\2\26\u008a\3\2\2\2\30\u0090\3\2\2")
+        buf.write("\2\32\u009a\3\2\2\2\34\u00a7\3\2\2\2\36\u00b4\3\2\2\2")
+        buf.write(" \u00b7\3\2\2\2\"\u00b9\3\2\2\2$\u00bc\3\2\2\2&\u00c0")
+        buf.write("\3\2\2\2(\u00c7\3\2\2\2*\u00c9\3\2\2\2,\u00cc\3\2\2\2")
+        buf.write(".\u00cf\3\2\2\2\60\u00d2\3\2\2\2\62\u00d4\3\2\2\2\64\u00d7")
+        buf.write("\3\2\2\2\66\u00da\3\2\2\28\u00dd\3\2\2\2:\u00e0\3\2\2")
         buf.write("\2<=\7\3\2\2=?\5:\36\2>@\5,\27\2?>\3\2\2\2?@\3\2\2\2@")
         buf.write("A\3\2\2\2AH\7\4\2\2BI\5\4\3\2CI\5\6\4\2DI\5\b\5\2EI\5")
         buf.write("\16\b\2FI\5\n\6\2GI\5\f\7\2HB\3\2\2\2HC\3\2\2\2HD\3\2")
@@ -74,34 +74,33 @@ def serializedATN():
         buf.write("\u009d\3\2\2\2\u00a3\u009e\3\2\2\2\u00a3\u009f\3\2\2\2")
         buf.write("\u00a3\u00a0\3\2\2\2\u00a3\u00a1\3\2\2\2\u00a3\u00a2\3")
         buf.write("\2\2\2\u00a4\u00a5\3\2\2\2\u00a5\u00a3\3\2\2\2\u00a5\u00a6")
-        buf.write("\3\2\2\2\u00a6\33\3\2\2\2\u00a7\u00a8\5 \21\2\u00a8\u00a9")
-        buf.write("\7\f\2\2\u00a9\u00b2\3\2\2\2\u00aa\u00b2\5,\27\2\u00ab")
-        buf.write("\u00b2\5\"\22\2\u00ac\u00b2\5\6\4\2\u00ad\u00b2\58\35")
-        buf.write("\2\u00ae\u00b2\5\36\20\2\u00af\u00b2\5\4\3\2\u00b0\u00b2")
-        buf.write("\5.\30\2\u00b1\u00a7\3\2\2\2\u00b1\u00aa\3\2\2\2\u00b1")
-        buf.write("\u00ab\3\2\2\2\u00b1\u00ac\3\2\2\2\u00b1\u00ad\3\2\2\2")
-        buf.write("\u00b1\u00ae\3\2\2\2\u00b1\u00af\3\2\2\2\u00b1\u00b0\3")
-        buf.write("\2\2\2\u00b2\u00b3\3\2\2\2\u00b3\u00b1\3\2\2\2\u00b3\u00b4")
-        buf.write("\3\2\2\2\u00b4\35\3\2\2\2\u00b5\u00b6\7\20\2\2\u00b6\u00b7")
-        buf.write("\5$\23\2\u00b7\37\3\2\2\2\u00b8\u00b9\7&\2\2\u00b9!\3")
-        buf.write("\2\2\2\u00ba\u00bb\7\21\2\2\u00bb\u00bc\t\2\2\2\u00bc")
-        buf.write("#\3\2\2\2\u00bd\u00be\7\27\2\2\u00be\u00bf\7&\2\2\u00bf")
-        buf.write("\u00c0\7\30\2\2\u00c0%\3\2\2\2\u00c1\u00c4\7\31\2\2\u00c2")
-        buf.write("\u00c5\5(\25\2\u00c3\u00c5\5*\26\2\u00c4\u00c2\3\2\2\2")
-        buf.write("\u00c4\u00c3\3\2\2\2\u00c5\u00c6\3\2\2\2\u00c6\u00c7\3")
-        buf.write("\2\2\2\u00c6\u00c4\3\2\2\2\u00c7\'\3\2\2\2\u00c8\u00c9")
-        buf.write("\7)\2\2\u00c9)\3\2\2\2\u00ca\u00cb\7\32\2\2\u00cb\u00cc")
-        buf.write("\7&\2\2\u00cc+\3\2\2\2\u00cd\u00ce\7\33\2\2\u00ce\u00cf")
-        buf.write("\5$\23\2\u00cf-\3\2\2\2\u00d0\u00d1\7\34\2\2\u00d1\u00d2")
-        buf.write("\7&\2\2\u00d2/\3\2\2\2\u00d3\u00d4\t\3\2\2\u00d4\61\3")
-        buf.write("\2\2\2\u00d5\u00d6\7\37\2\2\u00d6\u00d7\7&\2\2\u00d7\63")
-        buf.write("\3\2\2\2\u00d8\u00d9\7 \2\2\u00d9\u00da\7&\2\2\u00da\65")
-        buf.write("\3\2\2\2\u00db\u00dc\7!\2\2\u00dc\u00dd\7&\2\2\u00dd\67")
-        buf.write("\3\2\2\2\u00de\u00df\7\"\2\2\u00df\u00e0\7\'\2\2\u00e0")
-        buf.write("9\3\2\2\2\u00e1\u00e2\7#\2\2\u00e2\u00e3\7$\2\2\u00e3")
-        buf.write("\u00e4\7)\2\2\u00e4\u00e5\7%\2\2\u00e5\u00e6\7)\2\2\u00e6")
-        buf.write(";\3\2\2\2\32?HJZ\\cekrt{}\u0084\u0086\u008a\u008e\u0096")
-        buf.write("\u0098\u00a3\u00a5\u00b1\u00b3\u00c4\u00c6")
+        buf.write("\3\2\2\2\u00a6\33\3\2\2\2\u00a7\u00a8\5 \21\2\u00a8\u00b0")
+        buf.write("\7\f\2\2\u00a9\u00b1\5,\27\2\u00aa\u00b1\5\"\22\2\u00ab")
+        buf.write("\u00b1\5\6\4\2\u00ac\u00b1\58\35\2\u00ad\u00b1\5\36\20")
+        buf.write("\2\u00ae\u00b1\5\4\3\2\u00af\u00b1\5.\30\2\u00b0\u00a9")
+        buf.write("\3\2\2\2\u00b0\u00aa\3\2\2\2\u00b0\u00ab\3\2\2\2\u00b0")
+        buf.write("\u00ac\3\2\2\2\u00b0\u00ad\3\2\2\2\u00b0\u00ae\3\2\2\2")
+        buf.write("\u00b0\u00af\3\2\2\2\u00b1\u00b2\3\2\2\2\u00b2\u00b0\3")
+        buf.write("\2\2\2\u00b2\u00b3\3\2\2\2\u00b3\35\3\2\2\2\u00b4\u00b5")
+        buf.write("\7\20\2\2\u00b5\u00b6\5$\23\2\u00b6\37\3\2\2\2\u00b7\u00b8")
+        buf.write("\7&\2\2\u00b8!\3\2\2\2\u00b9\u00ba\7\21\2\2\u00ba\u00bb")
+        buf.write("\t\2\2\2\u00bb#\3\2\2\2\u00bc\u00bd\7\27\2\2\u00bd\u00be")
+        buf.write("\7&\2\2\u00be\u00bf\7\30\2\2\u00bf%\3\2\2\2\u00c0\u00c3")
+        buf.write("\7\31\2\2\u00c1\u00c4\5(\25\2\u00c2\u00c4\5*\26\2\u00c3")
+        buf.write("\u00c1\3\2\2\2\u00c3\u00c2\3\2\2\2\u00c4\u00c5\3\2\2\2")
+        buf.write("\u00c5\u00c6\3\2\2\2\u00c5\u00c3\3\2\2\2\u00c6\'\3\2\2")
+        buf.write("\2\u00c7\u00c8\7)\2\2\u00c8)\3\2\2\2\u00c9\u00ca\7\32")
+        buf.write("\2\2\u00ca\u00cb\7&\2\2\u00cb+\3\2\2\2\u00cc\u00cd\7\33")
+        buf.write("\2\2\u00cd\u00ce\5$\23\2\u00ce-\3\2\2\2\u00cf\u00d0\7")
+        buf.write("\34\2\2\u00d0\u00d1\7&\2\2\u00d1/\3\2\2\2\u00d2\u00d3")
+        buf.write("\t\3\2\2\u00d3\61\3\2\2\2\u00d4\u00d5\7\37\2\2\u00d5\u00d6")
+        buf.write("\7&\2\2\u00d6\63\3\2\2\2\u00d7\u00d8\7 \2\2\u00d8\u00d9")
+        buf.write("\7&\2\2\u00d9\65\3\2\2\2\u00da\u00db\7!\2\2\u00db\u00dc")
+        buf.write("\7&\2\2\u00dc\67\3\2\2\2\u00dd\u00de\7\"\2\2\u00de\u00df")
+        buf.write("\7\'\2\2\u00df9\3\2\2\2\u00e0\u00e1\7#\2\2\u00e1\u00e2")
+        buf.write("\7$\2\2\u00e2\u00e3\7)\2\2\u00e3\u00e4\7%\2\2\u00e4\u00e5")
+        buf.write("\7)\2\2\u00e5;\3\2\2\2\32?HJZ\\cekrt{}\u0084\u0086\u008a")
+        buf.write("\u008e\u0096\u0098\u00a3\u00a5\u00b0\u00b2\u00c3\u00c5")
         return buf.getvalue()
 
 
@@ -585,6 +584,7 @@ class cwlParser ( Parser ):
 
         localctx = cwlParser.OutputsContext(self, self._ctx, self.state)
         self.enterRule(localctx, 10, self.RULE_outputs)
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 92
@@ -596,20 +596,18 @@ class cwlParser ( Parser ):
                 self.state = 93
                 self.match(cwlParser.T__6)
                 pass
-            elif token in [cwlParser.T__2, cwlParser.T__3, cwlParser.T__13, cwlParser.T__14, cwlParser.T__24, cwlParser.T__25, cwlParser.T__31, cwlParser.WORD]:
+            elif token in [cwlParser.WORD]:
                 self.state = 95 
                 self._errHandler.sync(self)
-                _alt = 1
-                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                    if _alt == 1:
-                        self.state = 94
-                        self.output()
-
-                    else:
-                        raise NoViableAltException(self)
+                _la = self._input.LA(1)
+                while True:
+                    self.state = 94
+                    self.output()
                     self.state = 97 
                     self._errHandler.sync(self)
-                    _alt = self._interp.adaptivePredict(self._input,5,self._ctx)
+                    _la = self._input.LA(1)
+                    if not (_la==cwlParser.WORD):
+                        break
 
                 pass
             else:
@@ -1214,11 +1212,8 @@ class cwlParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def name(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(cwlParser.NameContext)
-            else:
-                return self.getTypedRuleContext(cwlParser.NameContext,i)
+        def name(self):
+            return self.getTypedRuleContext(cwlParser.NameContext,0)
 
 
         def identification(self, i:int=None):
@@ -1290,46 +1285,44 @@ class cwlParser ( Parser ):
         self.enterRule(localctx, 26, self.RULE_output)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 175 
+            self.state = 165
+            self.name()
+            self.state = 166
+            self.match(cwlParser.T__9)
+            self.state = 174 
             self._errHandler.sync(self)
             _alt = 1
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
                 if _alt == 1:
-                    self.state = 175
+                    self.state = 174
                     self._errHandler.sync(self)
                     token = self._input.LA(1)
-                    if token in [cwlParser.WORD]:
-                        self.state = 165
-                        self.name()
-                        self.state = 166
-                        self.match(cwlParser.T__9)
-                        pass
-                    elif token in [cwlParser.T__24]:
-                        self.state = 168
+                    if token in [cwlParser.T__24]:
+                        self.state = 167
                         self.identification()
                         pass
                     elif token in [cwlParser.T__14]:
-                        self.state = 169
+                        self.state = 168
                         self.type_()
                         pass
                     elif token in [cwlParser.T__3]:
-                        self.state = 170
+                        self.state = 169
                         self.doc()
                         pass
                     elif token in [cwlParser.T__31]:
-                        self.state = 171
+                        self.state = 170
                         self.default()
                         pass
                     elif token in [cwlParser.T__13]:
-                        self.state = 172
+                        self.state = 171
                         self.source()
                         pass
                     elif token in [cwlParser.T__2]:
-                        self.state = 173
+                        self.state = 172
                         self.label()
                         pass
                     elif token in [cwlParser.T__25]:
-                        self.state = 174
+                        self.state = 173
                         self.outputSource()
                         pass
                     else:
@@ -1338,7 +1331,7 @@ class cwlParser ( Parser ):
 
                 else:
                     raise NoViableAltException(self)
-                self.state = 177 
+                self.state = 176 
                 self._errHandler.sync(self)
                 _alt = self._interp.adaptivePredict(self._input,21,self._ctx)
 
@@ -1380,9 +1373,9 @@ class cwlParser ( Parser ):
         self.enterRule(localctx, 28, self.RULE_source)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 179
+            self.state = 178
             self.match(cwlParser.T__13)
-            self.state = 180
+            self.state = 179
             self.tag()
         except RecognitionException as re:
             localctx.exception = re
@@ -1421,7 +1414,7 @@ class cwlParser ( Parser ):
         self.enterRule(localctx, 30, self.RULE_name)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 182
+            self.state = 181
             self.match(cwlParser.WORD)
         except RecognitionException as re:
             localctx.exception = re
@@ -1459,9 +1452,9 @@ class cwlParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 184
+            self.state = 183
             self.match(cwlParser.T__14)
-            self.state = 185
+            self.state = 184
             _la = self._input.LA(1)
             if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << cwlParser.T__15) | (1 << cwlParser.T__16) | (1 << cwlParser.T__17) | (1 << cwlParser.T__18) | (1 << cwlParser.T__19))) != 0)):
                 self._errHandler.recoverInline(self)
@@ -1505,11 +1498,11 @@ class cwlParser ( Parser ):
         self.enterRule(localctx, 34, self.RULE_tag)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 187
+            self.state = 186
             self.match(cwlParser.T__20)
-            self.state = 188
+            self.state = 187
             self.match(cwlParser.WORD)
-            self.state = 189
+            self.state = 188
             self.match(cwlParser.T__21)
         except RecognitionException as re:
             localctx.exception = re
@@ -1559,22 +1552,22 @@ class cwlParser ( Parser ):
         self.enterRule(localctx, 36, self.RULE_inputBinding)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 191
+            self.state = 190
             self.match(cwlParser.T__22)
-            self.state = 194 
+            self.state = 193 
             self._errHandler.sync(self)
             _alt = 1+1
             while _alt!=1 and _alt!=ATN.INVALID_ALT_NUMBER:
                 if _alt == 1+1:
-                    self.state = 194
+                    self.state = 193
                     self._errHandler.sync(self)
                     token = self._input.LA(1)
                     if token in [cwlParser.INTEGER]:
-                        self.state = 192
+                        self.state = 191
                         self.position()
                         pass
                     elif token in [cwlParser.T__23]:
-                        self.state = 193
+                        self.state = 192
                         self.prefix()
                         pass
                     else:
@@ -1583,7 +1576,7 @@ class cwlParser ( Parser ):
 
                 else:
                     raise NoViableAltException(self)
-                self.state = 196 
+                self.state = 195 
                 self._errHandler.sync(self)
                 _alt = self._interp.adaptivePredict(self._input,23,self._ctx)
 
@@ -1624,7 +1617,7 @@ class cwlParser ( Parser ):
         self.enterRule(localctx, 38, self.RULE_position)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 198
+            self.state = 197
             self.match(cwlParser.INTEGER)
         except RecognitionException as re:
             localctx.exception = re
@@ -1663,9 +1656,9 @@ class cwlParser ( Parser ):
         self.enterRule(localctx, 40, self.RULE_prefix)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 200
+            self.state = 199
             self.match(cwlParser.T__23)
-            self.state = 201
+            self.state = 200
             self.match(cwlParser.WORD)
         except RecognitionException as re:
             localctx.exception = re
@@ -1705,9 +1698,9 @@ class cwlParser ( Parser ):
         self.enterRule(localctx, 42, self.RULE_identification)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 203
+            self.state = 202
             self.match(cwlParser.T__24)
-            self.state = 204
+            self.state = 203
             self.tag()
         except RecognitionException as re:
             localctx.exception = re
@@ -1746,9 +1739,9 @@ class cwlParser ( Parser ):
         self.enterRule(localctx, 44, self.RULE_outputSource)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 206
+            self.state = 205
             self.match(cwlParser.T__25)
-            self.state = 207
+            self.state = 206
             self.match(cwlParser.WORD)
         except RecognitionException as re:
             localctx.exception = re
@@ -1786,7 +1779,7 @@ class cwlParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 209
+            self.state = 208
             _la = self._input.LA(1)
             if not(_la==cwlParser.T__26 or _la==cwlParser.T__27):
                 self._errHandler.recoverInline(self)
@@ -1830,9 +1823,9 @@ class cwlParser ( Parser ):
         self.enterRule(localctx, 48, self.RULE_baseCommand)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 211
+            self.state = 210
             self.match(cwlParser.T__28)
-            self.state = 212
+            self.state = 211
             self.match(cwlParser.WORD)
         except RecognitionException as re:
             localctx.exception = re
@@ -1871,9 +1864,9 @@ class cwlParser ( Parser ):
         self.enterRule(localctx, 50, self.RULE_stdin_)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 214
+            self.state = 213
             self.match(cwlParser.T__29)
-            self.state = 215
+            self.state = 214
             self.match(cwlParser.WORD)
         except RecognitionException as re:
             localctx.exception = re
@@ -1912,9 +1905,9 @@ class cwlParser ( Parser ):
         self.enterRule(localctx, 52, self.RULE_stdout_)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 217
+            self.state = 216
             self.match(cwlParser.T__30)
-            self.state = 218
+            self.state = 217
             self.match(cwlParser.WORD)
         except RecognitionException as re:
             localctx.exception = re
@@ -1953,9 +1946,9 @@ class cwlParser ( Parser ):
         self.enterRule(localctx, 54, self.RULE_default)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 220
+            self.state = 219
             self.match(cwlParser.T__31)
-            self.state = 221
+            self.state = 220
             self.match(cwlParser.STRING)
         except RecognitionException as re:
             localctx.exception = re
@@ -1997,15 +1990,15 @@ class cwlParser ( Parser ):
         self.enterRule(localctx, 56, self.RULE_version)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 223
+            self.state = 222
             self.match(cwlParser.T__32)
-            self.state = 224
+            self.state = 223
             self.match(cwlParser.T__33)
-            self.state = 225
+            self.state = 224
             self.match(cwlParser.INTEGER)
-            self.state = 226
+            self.state = 225
             self.match(cwlParser.T__34)
-            self.state = 227
+            self.state = 226
             self.match(cwlParser.INTEGER)
         except RecognitionException as re:
             localctx.exception = re
