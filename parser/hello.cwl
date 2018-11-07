@@ -5,7 +5,8 @@ class: Workflow
 label: "Hello World"
 doc: "Outputs a message using echo"
 
-inputs: []
+inputs:[]
+
 
 outputs:
   response:
@@ -22,11 +23,13 @@ steps:
           doc: "The message to print"
           default: "Hello World"
           inputBinding:
-            position: 1
+            position: 0
+
       baseCommand: echo
       stdout: response.txt
       outputs:
         response:
           type: stdout
+
     in: []
     out: [response]

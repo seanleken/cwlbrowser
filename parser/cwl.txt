@@ -1,0 +1,15 @@
+
+Input:inputs:--
+
+[]--
+
+
+Output:outputs:response:outputSource:step0/responsetype:File
+step found
+Input:inputs:--
+
+message:type:stringdoc:"The message to print"default:"Hello World"inputBinding:position:0--
+
+
+Output:outputs:response:type:stdout
+step exited
