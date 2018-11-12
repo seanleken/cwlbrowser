@@ -2,14 +2,14 @@ grammar cwl;
 
 //PARSER
 workflow            :'#!/usr/bin/env cwl-runner' version identification?
-                    'class: Workflow' label? doc? description? inputs? outputs? steps?
+                    'class: Workflow' (label| doc| description| inputs|outputs|steps)+
                       EOF;
-label               : 'label:' STRING;
-doc                 : 'doc:' STRING;
-description         : 'description:' STRING;
-inputs              : 'inputs:' ('[]' | input_+);
-outputs             : 'outputs:' ('[]' | output+);
-steps               : 'steps:' step+;
+label               : 'label:' STRING '\n';
+doc                 : 'doc:' STRING '\n';
+description         : 'description:' STRING 'NL;
+inputs              : 'inputs:' ('[]' NL | NL input_+);
+outputs             : 'outputs:' ('[]' NL | NL output+);
+steps               : 'steps:' NL step+;
 step                : name ':' run (in_ | out_)+;
 in_                  : 'in: ' ('[]' | '['WORD']' | in_or_out+);
 out_                 : 'out: ' ('[]' | '['WORD']' | in_or_out+);
@@ -38,6 +38,6 @@ version             : 'cwlVersion:' 'v1.0';
 //LEXER
 WORD                : ('A'..'Z'|'a'..'z'|'/'|'.')+;
 STRING              : '"' .*? '"';
-NEWLINE             : ('\r'? '\n' | '\r')+ -> skip;
 NUMBER              : [0-9]+;
+NL                  : '\n';
 WHITESPACE          : ' ' -> skip ;
