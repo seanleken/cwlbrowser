@@ -8,12 +8,30 @@ else:
 # This class defines a complete listener for a parse tree produced by cwlParser.
 class cwlListener(ParseTreeListener):
 
+    # Enter a parse tree produced by cwlParser#main_file.
+    def enterMain_file(self, ctx:cwlParser.Main_fileContext):
+        pass
+
+    # Exit a parse tree produced by cwlParser#main_file.
+    def exitMain_file(self, ctx:cwlParser.Main_fileContext):
+        pass
+
+
     # Enter a parse tree produced by cwlParser#workflow.
     def enterWorkflow(self, ctx:cwlParser.WorkflowContext):
         pass
 
     # Exit a parse tree produced by cwlParser#workflow.
     def exitWorkflow(self, ctx:cwlParser.WorkflowContext):
+        pass
+
+
+    # Enter a parse tree produced by cwlParser#tool.
+    def enterTool(self, ctx:cwlParser.ToolContext):
+        pass
+
+    # Exit a parse tree produced by cwlParser#tool.
+    def exitTool(self, ctx:cwlParser.ToolContext):
         pass
 
 

@@ -8,7 +8,7 @@ def main(argv):
     lexer = cwlLexer(input)
     stream = CommonTokenStream(lexer)
     parser = cwlParser(stream)
-    tree = parser.workflow()
+    tree = parser.main_file()
 
     output = open('cwl.txt', 'w')
     customcwlListen = customcwlListener(output)
