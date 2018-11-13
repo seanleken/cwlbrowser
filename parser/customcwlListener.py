@@ -8,23 +8,35 @@ class customcwlListener(cwlListener) :
         self.output = output
 
     def enterInputs(self, ctx:cwlParser.InputsContext) :
-        self.output.write('\nInput:')
+        self.output.write('Input:\n')
 
     def exitInputs(self, ctx:cwlParser.InputsContext) :
         for child in ctx.children :
-            self.output.write(child.getText())
-            self.output.write("--")
-            self.output.write("\n\n")
+            if isinstance(child, cwlParser.Input_Context) :
+                self.output.write(child.getText())
+                self.output.write("--")
+                self.output.write("\n")
 
     def enterOutputs(self, ctx:cwlParser.OutputsContext) :
-        self.output.write('\nOutput:')
+        self.output.write('Output:\n')
 
     def exitOutputs(self, ctx:cwlParser.OutputsContext) :
         for child in ctx.children :
-            self.output.write(child.getText())
+            if isinstance(child, cwlParser.OutputContext) :
+                self.output.write(child.getText())
+                self.output.write("--\n")
 
     def enterStep(self, ctx:cwlParser.StepContext) :
         self.output.write("\nstep found")
 
     def exitStep(self, ctx:cwlParser.StepContext) :
         self.output.write("\nstep exited")
+        for child in ctx.children :
+            self.output.write(child.getText())
+
+    """def exitTool(self, ctx:cwlParser.ToolContext) :
+        for child in ctx.children :
+            self.output.write(child.getText())"""
+
+
+   
