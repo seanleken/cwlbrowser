@@ -30,9 +30,10 @@ class customcwlListener(cwlListener) :
         self.output.write("\nstep found")
 
     def exitStep(self, ctx:cwlParser.StepContext) :
-        self.output.write("\nstep exited")
+        self.output.write("\nstep exited\n")
         for child in ctx.children :
             self.output.write(child.getText())
+            self.output.write("\n")
 
     """def exitTool(self, ctx:cwlParser.ToolContext) :
         for child in ctx.children :
