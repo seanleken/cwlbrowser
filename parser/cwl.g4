@@ -47,7 +47,7 @@ file_                : '-'? '{'?  'class: File' (','| NL)
 location            :  'location:' (name | STRING);
 secondaryFiles      : '-'? 'secondaryFiles:' NL '-'? (file_ | STRING NL?);
 version             : 'cwlVersion:' 'v1.0';
-hints               : 'hints:' NL name NL?;
+hints               : 'hints:' NL name ':' NL?;
 
 //LEXER
 WORD                : ('A'..'Z'|'a'..'z'|'/'|'.'|'-'|'_'|'['|']'|'('|')'|'?')+;
