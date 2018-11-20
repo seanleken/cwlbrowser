@@ -29,11 +29,11 @@ class customcwlListener(cwlListener) :
     def enterStep(self, ctx:cwlParser.StepContext) :
         self.output.write("\nstep found")
 
-    def exitStep(self, ctx:cwlParser.StepContext) :
+    """def exitStep(self, ctx:cwlParser.StepContext) :
         self.output.write("\nstep exited\n")
         for child in ctx.children :
             self.output.write(child.getText())
-            self.output.write("\n")
+            self.output.write("\n")"""
 
     """def exitTool(self, ctx:cwlParser.ToolContext) :
         for child in ctx.children :
