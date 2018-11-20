@@ -49,7 +49,7 @@ default             : 'default:' NL? (STRING  | file_);
 file_                : '-'? '{'?  'class: File' (','| NL) 
                       (location (NL?|','?)|secondaryFiles NL?)+ '}'?;
 location            :  'location:' (word | STRING);
-secondaryFiles      : '-'? 'secondaryFiles:' NL '-'? (file_ | STRING NL?);
+secondaryFiles      : '-'? 'secondaryFiles:' NL? '-'? (file_ | STRING NL?| word NL?);
 version             : 'cwlVersion:' 'v1.0';
 hints               : 'hints:' NL dockerrequirement;
 
