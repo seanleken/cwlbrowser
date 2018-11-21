@@ -11,8 +11,8 @@ doc                 : 'doc:' (STRING|word) ;
 description         : 'description:' (STRING | word);
 in_                 : 'in:' (word  |  in_or_out+);
 out_                : 'out:' (word  |   in_or_out+);
-inputs              : 'inputs:' (word word|  input_+);
-outputs             : 'outputs:' (word word|  output+);
+inputs              : 'inputs:' (input_+);
+outputs             : 'outputs:' (output+);
 steps               : 'steps:'  step+;
 step                : word ':'  run (in_ | out_)+;
 in_or_out           : (identification | word word ':') '{'?

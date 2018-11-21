@@ -2,11 +2,12 @@
 cwlVersion: v1.0
 class: Workflow
 
-label: "Hello World"
-doc: "Outputs a message using echo"
+label: Hello World
+doc: Outputs a message using echo
 
-inputs:[]
-
+inputs:
+  string: 
+    label: A string
 
 outputs:
   response:
