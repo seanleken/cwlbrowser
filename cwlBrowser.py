@@ -13,7 +13,7 @@ steps = []
 #Loads workflow via github API
 #In order to use this method you must provide it with the name of the owner (according to github),
 #name of the repo, and the path (use copy path on the github page for the file)
-def loadWorkflowFromGitHub(owner, repo, path):
+def loadGitHub(owner, repo, path):
 	global out_workflow
 	link = "https://api.github.com/repos/" + owner + "/" + repo + "/contents/" + path
 	req = requests.get(link)
@@ -21,6 +21,7 @@ def loadWorkflowFromGitHub(owner, repo, path):
 	    print(req.status_code)
 	    if req.status_code == 404:
 	    	print ("cwl file not found. Maybe due to incorrect url")
+	    	print("\n")
 	else:
 		req = req.json()  	    
 		content = base64.b64decode(req['content'])
@@ -35,7 +36,7 @@ def loadWorkflowFromGitHub(owner, repo, path):
 #You can use this method if you have the .cwl file locally.
 #Make sure that you provide the method with the correct path to the 
 #.cwl file
-def loadWorkflow(workflow):
+def load(workflow):
 	global out_workflow
 	if os.path.exists(workflow):
 		file = open(workflow, 'rb')

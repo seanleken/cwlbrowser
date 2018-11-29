@@ -1,4 +1,4 @@
-def printAttr(attribute, attributeName):
+def printAttr(attribute, attributeName, subjectName):
 	print(attributeName + ":")
 	print("-----------------")
 	for item in attribute:
