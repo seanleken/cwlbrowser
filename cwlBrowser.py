@@ -5,6 +5,7 @@ import os
 import cwltool
 import subprocess
 import workflow as wf
+import util
 
 out_workflow = {}
 steps = []
@@ -78,60 +79,17 @@ def createWorkflowObject(name, workflow) :
 										, workflow["steps"])
 	return workflowObject
 
-#prints steps of workflow in neat form
-def printWorkflowSteps(workflow):
-	printAttr(workflow.steps, "Steps")
-
-#prints inputs of workflow in neat form
-def printWorkflowInputs(workflow):
-	printAttr(workflow.inputs, "Inputs")
-
-#prints outputs of workflow in neat form
-def printWorkflowOutputs(workflow):
-	printAttr(workflow.outputs, "Outputs")
-
-def printAttr(attribute, attributeName):
-	print(attributeName + ":")
-	print("-----------------")
-	for item in attribute:
-		if("id" in item):
-			print(item["id"])
-		else:
-			print(item)
-	print("\n")
-
-
 
 def compareNoOfInputs(workflow1, workflow2):
-    compare(workflow1.name, workflow2.name, workflow1.inputs, workflow2.inputs, "inputs")
+    util.compare(workflow1.name, workflow2.name, workflow1.inputs, workflow2.inputs, "inputs")
 
 def compareNoOfOutputs(workflow1, workflow2):
-	compare(workflow1.name, workflow2.name, workflow1.outputs, workflow2.outputs, "outputs")
+	util.compare(workflow1.name, workflow2.name, workflow1.outputs, workflow2.outputs, "outputs")
 
 def compareNoOfSteps(workflow1, workflow2):
-	compare(workflow1.name, workflow2.name, workflow1.steps, workflow2.steps, "steps")
+	util.compare(workflow1.name, workflow2.name, workflow1.steps, workflow2.steps, "steps")
 
 
-def compare(name1, name2,attributeX, attributeY, attributeName):
-	count1 = 0
-	count2 = 0
-	difference = 0
-	for input_ in attributeX:
-		count1 = count1 + 1
-	for input_2 in attributeY:
-		count2 = count2 + 1
-	if(count1 >= count2):
-		difference = count1 - count2
-	else:
-		difference = count2 - count1
-	print("-------------------------------------")
-	print("--------- " + attributeName + " comparison------------")
-	print("-------------------------------------")
-	print(name1 + "| no. of " + attributeName+ ": " + str(count1))
-	print(name2 + "| no. of " + attributeName+ ": " + str(count2))
-	print("Difference: " + str(difference))
-	print("-------------------------------------")
-	print("\n")
 
 
 
