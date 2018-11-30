@@ -1,8 +1,8 @@
 def printAttr(attribute, attributeName, subjectName):
-	print(attributeName + ":")
+	print(subjectName + " " + attributeName + ":")
 	print("-----------------")
 	for item in attribute:
-		if("id" in item):
+		if(isinstance(item, dict)):
 			print(item["id"])
 		else:
 			print(item)

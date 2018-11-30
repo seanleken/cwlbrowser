@@ -10,12 +10,7 @@ import util
 out_workflow = {}
 steps = []
 
-#Loads workflow via github API
-#In order to use this method you must provide it with the name of the owner (according to github),
-#name of the repo, and the path (use copy path on the github page for the file)
-def loadGitHub(owner, repo, path):
-	global out_workflow
-	link = "https://api.github.com/repos/" + owner + "/" + repo + "/contents/" + path
+def retrieveFileThruLink(link, path):
 	req = requests.get(link)
 	if req.status_code != 200:
 	    print(req.status_code)
@@ -31,6 +26,15 @@ def loadGitHub(owner, repo, path):
 			return createWorkflowObject(path, out_workflow)
 		except (yaml.YAMLError):
 			print ("Error in loading the cwl file")
+
+#Loads workflow via github API
+#In order to use this method you must provide it with the name of the owner (according to github),
+#name of the repo, and the path (use copy path on the github page for the file)
+def loadGitHub(owner, repo, path):
+	global out_workflow
+	link = "https://api.github.com/repos/" + owner + "/" + repo + "/contents/" + path
+	return retrieveFileThruLink(link, path)
+	
 
 
 #You can use this method if you have the .cwl file locally.
@@ -48,6 +52,18 @@ def load(workflow):
 	else:
 		print("File not located")
 		return -1;
+
+#loads workflow when given full url
+def loadWithLink(link, branch='master') :
+	lhs, rhs = link.split("/blob/", 1)
+	path = rhs.replace(branch, "")
+	ownerrepo = lhs.replace('https://github.com', "")
+	finallink = "https://api.github.com/repos" + ownerrepo + "/contents" + path
+	return retrieveFileThruLink(finallink, path)
+
+
+
+
 
 
 #print the specified attribute you want 
