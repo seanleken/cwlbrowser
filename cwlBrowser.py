@@ -6,6 +6,7 @@ import cwltool
 import subprocess
 import workflow as wf
 import util
+from IPython.display import SVG, display
 
 out_workflow = {}
 steps = []
@@ -95,6 +96,23 @@ def createWorkflowObject(name, workflow) :
 	workflowObject = wf.Workflow(name, workflow["inputs"], workflow["outputs"]
 										, workflow["steps"])
 	return workflowObject
+
+
+def displayGraphSVG(link):
+	BASE_URL = 'https://view.commonwl.org'
+
+	HEADERS = {
+		'accept': 'application/json'
+	}
+	shortenedLink = link.replace("https://", "")
+	finishedlink = BASE_URL + "/workflows/" + shortenedLink
+	req = requests.get(finishedlink, headers=HEADERS)
+	if req.status_code != 200:
+		print(req.status_code)
+	else:
+		req = req.json()     
+		display(SVG(BASE_URL + req['visualisationSvg']))
+
 
 
 def compareNoOfInputs(workflow1, workflow2):
