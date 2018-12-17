@@ -1,3 +1,5 @@
+import workflow as wf
+
 def printAttr(attribute, attributeName, subjectName):
 	print(subjectName + " " + attributeName + ":")
 	print("-----------------")
@@ -7,6 +9,20 @@ def printAttr(attribute, attributeName, subjectName):
 		else:
 			print(item)
 	print("\n")
+
+def instantiateInputs(inputs) :
+	temp = []
+	for key, value in inputs.items() :
+		item = wf.Input(key, value["type"])
+		temp.append(item)
+	return  temp
+
+def instantiateOutputs(outputs) :
+	temp = []
+	for key, value in outputs.items() :
+		item = wf.Output(key, value["type"])
+		temp.append(item)
+	return  temp
 
 
 def compare(name1, name2,attributeX, attributeY, attributeName):

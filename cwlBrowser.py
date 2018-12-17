@@ -95,6 +95,10 @@ def packWorkflow(workflow) :
 def createWorkflowObject(name, workflow) :
 	workflowObject = wf.Workflow(name, workflow["inputs"], workflow["outputs"]
 										, workflow["steps"])
+	workflowInputs = []
+	workflowObject.inputArray = util.instantiateInputs(workflow["inputs"])
+	workflowObject.outputArray = util.instantiateOutputs(workflow["outputs"])
+	workflowObject.stepArray = instantiateSteps(workflow["steps"])
 	return workflowObject
 
 
@@ -123,6 +127,18 @@ def compareNoOfOutputs(workflow1, workflow2):
 
 def compareNoOfSteps(workflow1, workflow2):
 	util.compare(workflow1.name, workflow2.name, workflow1.steps, workflow2.steps, "steps")
+
+
+def instantiateSteps(steps) :
+	temp = []
+	#print (steps)
+	for key, value in steps.items() :
+		if ("out" in value):
+			item = wf.Step(key, value["in"], value["run"], value["out"])
+		else:
+			item = wf.Step(key, value["in"], value["run"])
+		temp.append(item)
+	return temp
 
 
 

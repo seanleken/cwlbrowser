@@ -4,6 +4,9 @@ class Workflow:
 	def __init__(self, name, inputs, outputs, steps):
 		self.name = name;
 		self.inputs = inputs
+		self.inputArray = []
+		self.outputArray = []
+		self.StepArray = []
 		self.outputs = outputs
 		self.steps = steps
 
@@ -17,26 +20,44 @@ class Workflow:
 	def printOutputs(self):
 		util.printAttr(self.outputs, "Outputs", self.name)
 
+	def printInputArray(self):
+		print("Inputs")
+		for input_ in self.inputArray:
+			print("Name: {0} Type: {1}".format(input_.name, input_.type))
+
+	def printOutputArray(self):
+		print("Outputs")
+		for output in self.outputArray:
+			print("Name {0} Type: {1}".format(output.name, output.type))
+
+	def printStepArray(self):
+		print("Steps")
+		for step in self.stepArray:
+			print("Name {0}".format(step.name))
+			print("Inputs{0}".format(step.in_))
+
 	
 
 
 
 
 
-"""class Step:
-	def __init__(self, name, in_, out, run, baseCommand):
+class Step:
+	def __init__(self, name, in_, run, out=[]):
+		self.name = name
 		self.in_ = in_
+		#self.inputArray = util.instantiateInputs(in_)
+		#self.outputArray = util.instantiateOutputs(out)
 		self.out = out
 		self.run = run
-		self.baseCommand
 
-for k, v in self.step.items()
-	step = Step(k, v[in_], v[out], v[run], v[baseCommand])
-	util.printAttr(step.in, step)
+
 class Input:
-	def __init__(self, type)
+	def __init__(self, name, type):
+		self.name = name
 		self.type = type
 
 class Output:
-	def __init__(self, type)
-		self.type = type"""
+	def __init__(self, name, type):
+		self.name = name
+		self.type = type
