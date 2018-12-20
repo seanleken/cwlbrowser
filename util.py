@@ -12,16 +12,32 @@ def printAttr(attribute, attributeName, subjectName):
 
 def instantiateInputs(inputs) :
 	temp = []
-	for key, value in inputs.items() :
-		item = wf.Input(key, value["type"])
-		temp.append(item)
+	if(isinstance(inputs, dict)) :
+		for key, value in inputs.items() :
+			type_ = "not known" if not ("type" in value) else value["type"]
+			item = wf.Input(key, type_)
+			temp.append(item)
+	else :
+		for input_ in inputs :
+			type_ = "not known" if not ("type" in input_) else input_["type"]
+			inputName= input_ if not ("id" in input_) else input_["id"]
+			inputObj = wf.Input(inputName, type_)
+			temp.append(inputObj)
 	return  temp
 
 def instantiateOutputs(outputs) :
 	temp = []
-	for key, value in outputs.items() :
-		item = wf.Output(key, value["type"])
-		temp.append(item)
+	if(isinstance(outputs, dict)) :
+		for key, value in outputs.items() :
+			type_ = "not known" if not ("type" in value) else value["type"]
+			item = wf.Output(key, type_)
+			temp.append(item)
+	else :
+		for output in outputs :
+			type_ = "not known" if not ("type" in output) else output["type"]
+			outputName = output if not ("id" in output) else output["id"]
+			outputObj = wf.Output(outputName, type_)
+			temp.append(outputObj)
 	return  temp
 
 
@@ -45,3 +61,19 @@ def compare(name1, name2,attributeX, attributeY, attributeName):
 	print("Difference: " + str(difference))
 	print("-------------------------------------")
 	print("\n")
+
+def printInputArray(inputArray):
+	print("Inputs:")
+	for input_ in inputArray:
+		if not(input_.type == "not known"):
+			print("Name: {0} Type: {1}".format(input_.name, input_.type))
+		else :
+			print("Name: {0}".format(input_.name))
+
+def printOutputArray(outputArray):
+	print("Outputs:")
+	for output in outputArray:
+		if not(output.type == "not known") :
+			print("Name: {0} Type: {1}".format(output.name, output.type))
+		else :
+			print("Name: {0}".format(output.name))

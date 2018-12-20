@@ -132,12 +132,14 @@ def compareNoOfSteps(workflow1, workflow2):
 def instantiateSteps(steps) :
 	temp = []
 	#print (steps)
-	for key, value in steps.items() :
-		if ("out" in value):
+	if (isinstance(steps, dict)) :
+		for key, value in steps.items() :
 			item = wf.Step(key, value["in"], value["run"], value["out"])
-		else:
-			item = wf.Step(key, value["in"], value["run"])
-		temp.append(item)
+			temp.append(item)
+	else :
+		for step in steps :
+			stepObj = wf.Step(step["id"], step["in"], step["run"], step["out"])
+			temp.append(stepObj)
 	return temp
 
 
