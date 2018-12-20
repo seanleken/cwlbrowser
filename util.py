@@ -34,9 +34,12 @@ def instantiateOutputs(outputs) :
 			temp.append(item)
 	else :
 		for output in outputs :
-			type_ = "not known" if not ("type" in output) else output["type"]
-			outputName = output if not ("id" in output) else output["id"]
-			outputObj = wf.Output(outputName, type_)
+			if (isinstance(output, dict)) :
+				type_ = "not known" if not ("type" in output) else output["type"]
+				outputName = output if not ("id" in output) else output["id"]
+				outputObj = wf.Output(outputName, type_)
+			else :
+				outputObj = wf.Output(output, "not known")
 			temp.append(outputObj)
 	return  temp
 

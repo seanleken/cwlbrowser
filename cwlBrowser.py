@@ -24,6 +24,7 @@ def retrieveFileThruLink(link, path):
 		content = content.decode("utf-8")
 		try:
 			out_workflow = yaml.safe_load(content)
+			#print (out_workflow)
 			return createWorkflowObject(path, out_workflow)
 		except (yaml.YAMLError):
 			print ("Error in loading the cwl file")
