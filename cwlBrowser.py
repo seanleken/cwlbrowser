@@ -7,6 +7,8 @@ import subprocess
 import workflow as wf
 import util
 from IPython.display import SVG, display
+import time
+import os
 
 out_workflow = {}
 steps = []
@@ -26,8 +28,9 @@ def retrieveFileThruLink(link, path):
 			out_workflow = yaml.safe_load(content)
 			#print (out_workflow)
 			return createWorkflowObject(path, out_workflow)
-		except (yaml.YAMLError):
+		except (yaml.YAMLError) as yamlError:
 			print ("Error in loading the cwl file")
+			print (yamlError)
 
 #Loads workflow via github API
 #In order to use this method you must provide it with the name of the owner (according to github),
@@ -107,6 +110,57 @@ def displayGraphSVG(link):
 	BASE_URL = 'https://view.commonwl.org'
 
 	HEADERS = {
+	    'user-agent': 'my-app/0.0.1',
+		'accept': 'application/json'
+	}
+
+	addResponse = requests.post(BASE_URL + '/workflows', 
+							data={'url': link},		
+							headers=HEADERS)
+	if (addResponse.status_code == 200) :
+		postExistingWorkflowGraph(link)
+	elif (addResponse.status_code == requests.codes.accepted):
+		qLocation = addResponse.headers['location']
+
+		# Get the queue item until success
+		qResponse = requests.get(BASE_URL + qLocation,
+								headers=HEADERS,
+								allow_redirects=False)
+		maxAttempts = 5
+		while qResponse.status_code == requests.codes.ok and qResponse.json()['cwltoolStatus'] == 'RUNNING' and maxAttempts > 0:
+			time.sleep(5)
+			qResponse = requests.get(BASE_URL + qLocation,
+									headers=HEADERS,
+									allow_redirects=False)
+			maxAttempts -= 1
+		if 'location' in qResponse.headers:
+		# Success, get the workflow
+			workflowResponse = requests.get(BASE_URL + qResponse.headers['location'], headers=HEADERS)
+			if (workflowResponse.status_code == requests.codes.ok):
+				workflowJson = workflowResponse.json()
+				# Do what you want with the workflow JSON
+				# Include details in documentation files etc
+				display(SVG(BASE_URL + workflowJson['visualisationSvg']))
+			else:
+				print('Could not get returned workflow')
+		elif (qResponse.json()['cwltoolStatus'] == 'ERROR'):
+			# Cwltool failed to run here
+			print(qResponse.json()['message'])
+		elif (maxAttempts == 0):
+			print('Timeout: Cwltool did not finish')
+		else :
+			print('Something is not right')
+
+	else:
+		print (addResponse.status_code)
+		print('Error adding workflow')
+
+	"""
+	"""
+def postExistingWorkflowGraph(link) :
+	BASE_URL = 'https://view.commonwl.org'
+
+	HEADERS = {
 		'accept': 'application/json'
 	}
 	shortenedLink = link.replace("https://", "")
@@ -117,7 +171,6 @@ def displayGraphSVG(link):
 	else:
 		req = req.json()     
 		display(SVG(BASE_URL + req['visualisationSvg']))
-
 
 
 def compareNoOfInputs(workflow1, workflow2):

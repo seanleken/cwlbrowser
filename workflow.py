@@ -12,18 +12,18 @@ class Workflow:
 
 
 	def printInputs(self):
-		util.printInputArray(self.inputArray)
+		util.printInputArray(self.name, self.inputArray)
 
 
 	def printOutputs(self):
-		util.printOutputArray(self.outputArray)
+		util.printOutputArray(self.name, self.outputArray)
 
 	def printSteps(self):
-		print("Steps")
+		print(self.name + " STEPS")
 		for step in self.stepArray:
 			print("Name: {0}".format(step.name))
-			util.printInputArray(step.inputArray)
-			util.printOutputArray(step.outputArray)
+			util.printInputArray(step.name, step.inputArray)
+			util.printOutputArray(step.name, step.outputArray)
 			print("\n")
 
 	

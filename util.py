@@ -65,16 +65,16 @@ def compare(name1, name2,attributeX, attributeY, attributeName):
 	print("-------------------------------------")
 	print("\n")
 
-def printInputArray(inputArray):
-	print("Inputs:")
+def printInputArray(name, inputArray):
+	print(name + " INPUTS:")
 	for input_ in inputArray:
 		if not(input_.type == "not known"):
 			print("Name: {0} Type: {1}".format(input_.name, input_.type))
 		else :
 			print("Name: {0}".format(input_.name))
 
-def printOutputArray(outputArray):
-	print("Outputs:")
+def printOutputArray(name, outputArray):
+	print(name + " OUTPUTS:")
 	for output in outputArray:
 		if not(output.type == "not known") :
 			print("Name: {0} Type: {1}".format(output.name, output.type))
