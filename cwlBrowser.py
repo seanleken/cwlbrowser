@@ -227,10 +227,12 @@ def similarityCheckSteps(workflow1, workflow2):
 		print ("THE FOLLOWING ARE THE STEPS THAT DIFFER")
 		print ("----------------------------------------------------------")
 		print(smallerworkflow.name)
+		print("-----------------------------------------------------------")
 		for step in stepsThatDoNotMatchSmaller :
 			print (step)
 		print()
 		print(biggerworkflow.name)
+		print("-----------------------------------------------------------")
 		for step in stepsThatDoNotMatchBigger : 
 			print(step)
 	print("\n")
