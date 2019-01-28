@@ -65,6 +65,7 @@ def compare(name1, name2,attributeX, attributeY, attributeName):
 	print("-------------------------------------")
 	print("\n")
 
+
 def printInputArray(name, inputArray):
 	print(name + " INPUTS:")
 	for input_ in inputArray:
