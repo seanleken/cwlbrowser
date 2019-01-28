@@ -81,3 +81,33 @@ def printOutputArray(name, outputArray):
 			print("Name: {0} Type: {1}".format(output.name, output.type))
 		else :
 			print("Name: {0}".format(output.name))
+
+def similarityCheckItems(workflow1, workflow2, list1, list2, attributeName):
+	denominator = 0
+	numerator = 0
+	biggerList = []
+	smallerList = []
+	matchingItems = []
+	differingItemsForSmallerList  = []
+	differingItemsForBiggerlist = []
+	if(len(list1) >= len(list2)) :
+	for item in list1 :
+	  biggerList.append(item.name)
+	biggerWorkflow = workflow1
+	smallerWorkflow = workflow2
+	for item in  list2 :
+	  smallerList.append(item.name)
+	else :
+	for item in list2 :
+	  biggerList.append(item.name)
+	biggerWorkflow = workflow2
+	smallerWorkflow = workflow1
+	for item in list1 :
+	  smallerList.append(item.name)
+	denominator = 0 if not (len(biggerList) > 0) else len(biggerList)
+	matchingItems = set(smallerList).intersection(biggerList) 
+	if(len(matchingItems) != len(biggerList))
+	  differingItemsForSmallerList = set(smallerList).difference(biggerList)
+	differingItemsForBiggerlist = set(biggerList).difference(smallerList)
+	numerator =len(matchingItems)
+	return ((numerator /  denominator) * STEPS_WEIGHTING), differingItemsForSmallerList, differingItemsForBiggerList, smallerWorkflow, biggerWorkflow
