@@ -1,6 +1,5 @@
 import workflow as wf
 
-STEPS_WEIGHTING = 70
 
 def printAttr(attribute, attributeName, subjectName):
 	print(subjectName + " " + attributeName + ":")
@@ -84,7 +83,7 @@ def printOutputArray(name, outputArray):
 		else :
 			print("Name: {0}".format(output.name))
 
-def similarityCheckItems(workflow1, workflow2, list1, list2):
+def similarityCheckItems(workflow1, workflow2, list1, list2, weighting):
 	denominator = 0
 	numerator = 0
 	biggerList = []
@@ -112,4 +111,19 @@ def similarityCheckItems(workflow1, workflow2, list1, list2):
 		differingItemsForSmallerList = set(smallerList).difference(biggerList)
 		differingItemsForBiggerList = set(biggerList).difference(smallerList)
 	numerator =len(matchingItems)
-	return ((numerator /  denominator) * STEPS_WEIGHTING), differingItemsForSmallerList, differingItemsForBiggerList, smallerWorkflow, biggerWorkflow
+	return ((numerator /  denominator) * weighting), differingItemsForSmallerList, differingItemsForBiggerList, smallerWorkflow, biggerWorkflow
+
+def printItemSimilarityStats(diffSmall, diffBig, smallerWorkflow, biggerWorkflow, attribute) :
+	if (len(diffSmall) > 0) :
+		print ("THE FOLLOWING ARE THE {} THAT DIFFER".format(attribute))
+		print ("----------------------------------------------------------")
+		print(smallerWorkflow)
+		print("-----------------------------------------------------------")
+		for item in diffSmall :
+			print (item)
+		print()
+		print(biggerWorkflow)
+		print("-----------------------------------------------------------")
+		for item in diffBig : 
+			print(item)
+		print("\n")

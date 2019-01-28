@@ -12,6 +12,8 @@ import os
 
 out_workflow = {}
 steps = []
+STEPS_WEIGHTING = 70
+IO_WEIGHTING = 15
 
 def retrieveFileThruLink(link, path):
 	req = requests.get(link)
@@ -197,29 +199,28 @@ def instantiateSteps(steps) :
 	return temp
 
 def similarityCheck(workflow1, workflow2):
-	(workflowSimilarity, diffSmall, diffBig, smallerWorkflow, biggerWorkflow) = similarityCheckSteps(workflow1, workflow2)
+	(stepSimilarity, diffSmall, diffBig, smallerWorkflow, biggerWorkflow) = similarityCheckSteps(workflow1, workflow2)
 	print("SIMILARITY CHECK BETWEEN {} AND {}:".format(workflow1.name, workflow2.name))
-	print ("Overall match: {}".format(workflowSimilarity))
-	if (len(diffSmall) > 0) :
-		print ("THE FOLLOWING ARE THE STEPS THAT DIFFER")
-		print ("----------------------------------------------------------")
-		print(smallerWorkflow)
-		print("-----------------------------------------------------------")
-		for step in diffSmall :
-			print (step)
-		print()
-		print(biggerWorkflow)
-		print("-----------------------------------------------------------")
-		for step in diffBig : 
-			print(step)
+	util.printItemSimilarityStats(diffSmall, diffBig, smallerWorkflow, biggerWorkflow, "STEPS")
+	(inputSimilarity, diffSmall, diffBig, smallerWorkflow, biggerWorkflow) = similarityCheckInputs(workflow1, workflow2)
+	util.printItemSimilarityStats(diffSmall, diffBig, smallerWorkflow, biggerWorkflow, "INPUTS")
+	(outputSimilarity, diffSmall, diffBig, smallerWorkflow, biggerWorkflow) = similarityCheckOutputs(workflow1, workflow2)
+	util.printItemSimilarityStats(diffSmall, diffBig, smallerWorkflow, biggerWorkflow, "OUTPUTS")
+	overallSimilarity = stepSimilarity + inputSimilarity + outputSimilarity
+	print("---------------------------------------------------------------------------------------")
+	print("OVERALL SIMILARITY: {}".format(overallSimilarity))
+	print("---------------------------------------------------------------------------------------")
 	print("\n")
 
 
 def similarityCheckSteps(workflow1, workflow2):
-	return util.similarityCheckItems(workflow1.name, workflow2.name, workflow1.stepArray, workflow2.stepArray)
+	return util.similarityCheckItems(workflow1.name, workflow2.name, workflow1.stepArray, workflow2.stepArray, STEPS_WEIGHTING)
 
+def similarityCheckOutputs(workflow1, workflow2) :
+	return util.similarityCheckItems(workflow1.name, workflow2.name, workflow1.outputArray, workflow2.outputArray, IO_WEIGHTING)
 
-
+def similarityCheckInputs(workflow1, workflow2) :
+	return util.similarityCheckItems(workflow1.name, workflow2.name, workflow1.inputArray, workflow2.inputArray, IO_WEIGHTING)
 
 
 
