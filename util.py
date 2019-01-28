@@ -1,5 +1,7 @@
 import workflow as wf
 
+STEPS_WEIGHTING = 70
+
 def printAttr(attribute, attributeName, subjectName):
 	print(subjectName + " " + attributeName + ":")
 	print("-----------------")
@@ -82,32 +84,32 @@ def printOutputArray(name, outputArray):
 		else :
 			print("Name: {0}".format(output.name))
 
-def similarityCheckItems(workflow1, workflow2, list1, list2, attributeName):
+def similarityCheckItems(workflow1, workflow2, list1, list2):
 	denominator = 0
 	numerator = 0
 	biggerList = []
 	smallerList = []
 	matchingItems = []
 	differingItemsForSmallerList  = []
-	differingItemsForBiggerlist = []
+	differingItemsForBiggerList = []
 	if(len(list1) >= len(list2)) :
-	for item in list1 :
-	  biggerList.append(item.name)
-	biggerWorkflow = workflow1
-	smallerWorkflow = workflow2
-	for item in  list2 :
-	  smallerList.append(item.name)
+		for item in list1 :
+			biggerList.append(item.name)
+		biggerWorkflow = workflow1
+		smallerWorkflow = workflow2
+		for item in  list2 :
+			smallerList.append(item.name)
 	else :
-	for item in list2 :
-	  biggerList.append(item.name)
-	biggerWorkflow = workflow2
-	smallerWorkflow = workflow1
-	for item in list1 :
-	  smallerList.append(item.name)
+		for item in list2 :
+			biggerList.append(item.name)
+		biggerWorkflow = workflow2
+		smallerWorkflow = workflow1
+		for item in list1 :
+			smallerList.append(item.name)
 	denominator = 0 if not (len(biggerList) > 0) else len(biggerList)
 	matchingItems = set(smallerList).intersection(biggerList) 
-	if(len(matchingItems) != len(biggerList))
-	  differingItemsForSmallerList = set(smallerList).difference(biggerList)
-	differingItemsForBiggerlist = set(biggerList).difference(smallerList)
+	if(len(matchingItems) != len(biggerList)) :
+		differingItemsForSmallerList = set(smallerList).difference(biggerList)
+		differingItemsForBiggerList = set(biggerList).difference(smallerList)
 	numerator =len(matchingItems)
 	return ((numerator /  denominator) * STEPS_WEIGHTING), differingItemsForSmallerList, differingItemsForBiggerList, smallerWorkflow, biggerWorkflow

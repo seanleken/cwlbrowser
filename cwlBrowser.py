@@ -196,46 +196,27 @@ def instantiateSteps(steps) :
 			temp.append(stepObj)
 	return temp
 
-def similarityCheckSteps(workflow1, workflow2):
-	denominator = 0
-	stepsThatDoNotMatchSmaller = []
-	stepsThatDoNotMatchBigger = []
-	stepsThatMatch = []
-	biggerworkflowSteps = []
-	smallerworkflowSteps = []
-	if len(workflow1.stepArray) >= len(workflow2.stepArray) :
-		biggerworkflow = workflow1
-		smallerworkflow = workflow2
-	else :
-		biggerworkflow = workflow2
-		smallerworkflow = workflow1
-	denominator =  0 if not (len(biggerworkflow.stepArray) > 0) else len(biggerworkflow.stepArray)
-	numerator = 0;
-	for step in biggerworkflow.stepArray :
-		biggerworkflowSteps.append(step.name)
-	for step in smallerworkflow.stepArray :
-		smallerworkflowSteps.append(step.name)
-	stepsThatMatch = set(smallerworkflowSteps).intersection(biggerworkflowSteps)
-	if (len(stepsThatMatch) != len(biggerworkflowSteps)) :
-		stepsThatDoNotMatchSmaller = set(smallerworkflowSteps).difference(biggerworkflowSteps)
-		stepsThatDoNotMatchBigger = set(biggerworkflowSteps).difference(smallerworkflowSteps)
-	numerator = len(stepsThatMatch)
+def similarityCheck(workflow1, workflow2):
+	(workflowSimilarity, diffSmall, diffBig, smallerWorkflow, biggerWorkflow) = similarityCheckSteps(workflow1, workflow2)
 	print("SIMILARITY CHECK BETWEEN {} AND {}:".format(workflow1.name, workflow2.name))
-	similarityPercentage = (numerator / denominator) * 100
-	print ("Overall match: {}".format(similarityPercentage))
-	if (len(stepsThatDoNotMatchSmaller) > 0) :
+	print ("Overall match: {}".format(workflowSimilarity))
+	if (len(diffSmall) > 0) :
 		print ("THE FOLLOWING ARE THE STEPS THAT DIFFER")
 		print ("----------------------------------------------------------")
-		print(smallerworkflow.name)
+		print(smallerWorkflow)
 		print("-----------------------------------------------------------")
-		for step in stepsThatDoNotMatchSmaller :
+		for step in diffSmall :
 			print (step)
 		print()
-		print(biggerworkflow.name)
+		print(biggerWorkflow)
 		print("-----------------------------------------------------------")
-		for step in stepsThatDoNotMatchBigger : 
+		for step in diffBig : 
 			print(step)
 	print("\n")
+
+
+def similarityCheckSteps(workflow1, workflow2):
+	return util.similarityCheckItems(workflow1.name, workflow2.name, workflow1.stepArray, workflow2.stepArray)
 
 
 
