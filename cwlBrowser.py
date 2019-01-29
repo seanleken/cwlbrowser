@@ -208,19 +208,19 @@ def similarityCheck(workflow1, workflow2):
 	util.printItemSimilarityStats(diffSmall, diffBig, smallerWorkflow, biggerWorkflow, "OUTPUTS")
 	overallSimilarity = stepSimilarity + inputSimilarity + outputSimilarity
 	print("---------------------------------------------------------------------------------------")
-	print("OVERALL SIMILARITY: {}".format(overallSimilarity))
+	print("OVERALL MATCH: {}".format(overallSimilarity))
 	print("---------------------------------------------------------------------------------------")
 	print("\n")
 
 
 def similarityCheckSteps(workflow1, workflow2):
-	return util.similarityCheckItems(workflow1.name, workflow2.name, workflow1.stepArray, workflow2.stepArray, STEPS_WEIGHTING)
+	return util.similarityCheckItems(workflow1, workflow2, "steps" , STEPS_WEIGHTING)
 
 def similarityCheckOutputs(workflow1, workflow2) :
-	return util.similarityCheckItems(workflow1.name, workflow2.name, workflow1.outputArray, workflow2.outputArray, IO_WEIGHTING)
+	return util.similarityCheckItems(workflow1, workflow2, "outputs", IO_WEIGHTING)
 
 def similarityCheckInputs(workflow1, workflow2) :
-	return util.similarityCheckItems(workflow1.name, workflow2.name, workflow1.inputArray, workflow2.inputArray, IO_WEIGHTING)
+	return util.similarityCheckItems(workflow1, workflow2,"inputs", IO_WEIGHTING)
 
 
 
