@@ -1,5 +1,6 @@
 import workflow as wf
-
+TOP = "WORKFLOW"
+UNKNOWN = "not known"
 
 def printAttr(attribute, attributeName, subjectName):
 	print(subjectName + " " + attributeName + ":")
@@ -13,16 +14,33 @@ def printAttr(attribute, attributeName, subjectName):
 
 def instantiateInputs(inputs) :
 	temp = []
+	#input list is in the form of a dict ({})
 	if(isinstance(inputs, dict)) :
 		for key, value in inputs.items() :
-			type_ = "not known" if not ("type" in value) else value["type"]
-			item = wf.Input(key, type_)
+			source = TOP
+			#checks if input is in form of string(reference to declared input)
+			if(isinstance(value, str)) :
+				type_ = UNKNOWN
+				source = findSource(value)
+			#input itself is a dict
+			else :
+				type_ = UNKNOWN if not ("type" in value) else value["type"]
+			item = wf.Input(key, type_, source)
 			temp.append(item)
+	#input list is in the form of a list ([])
 	else :
 		for input_ in inputs :
-			type_ = "not known" if not ("type" in input_) else input_["type"]
-			inputName= input_ if not ("id" in input_) else input_["id"]
-			inputObj = wf.Input(inputName, type_)
+			source = TOP
+			if(isinstance(input_, str)) :
+				type_ = UNKNOWN
+				source = findSource(input_)
+				inputName = input_
+			#input is a dict 
+			else :
+				type_ = UNKNOWN if not ("type" in input_) else input_["type"]
+				inputName= input_ if not ("id" in input_) else input_["id"]
+				source = TOP if not ("source" in input_) else input_["source"]
+			inputObj = wf.Input(inputName, type_, source)
 			temp.append(inputObj)
 	return  temp
 
@@ -30,17 +48,17 @@ def instantiateOutputs(outputs) :
 	temp = []
 	if(isinstance(outputs, dict)) :
 		for key, value in outputs.items() :
-			type_ = "not known" if not ("type" in value) else value["type"]
+			type_ = UNKNOWN if not ("type" in value) else value["type"]
 			item = wf.Output(key, type_)
 			temp.append(item)
 	else :
 		for output in outputs :
 			if (isinstance(output, dict)) :
-				type_ = "not known" if not ("type" in output) else output["type"]
+				type_ = UNKNOWN if not ("type" in output) else output["type"]
 				outputName = output if not ("id" in output) else output["id"]
 				outputObj = wf.Output(outputName, type_)
 			else :
-				outputObj = wf.Output(output, "not known")
+				outputObj = wf.Output(output, UNKNOWN)
 			temp.append(outputObj)
 	return  temp
 
@@ -70,18 +88,20 @@ def compare(name1, name2,attributeX, attributeY, attributeName):
 def printInputArray(name, inputArray):
 	print(name + " INPUTS:")
 	for input_ in inputArray:
-		if not(input_.type == "not known"):
-			print("Name: {0} Type: {1}".format(input_.name, input_.type))
+		if not(input_.type == UNKNOWN):
+			print("INPUT Name: {0} Type: {1} Source: {2}".format(input_.name, input_.type, input_.source))
 		else :
-			print("Name: {0}".format(input_.name))
+			print("INPUT Name: {0} Source: {1}".format(input_.name, input_.source))
+	print()
 
 def printOutputArray(name, outputArray):
 	print(name + " OUTPUTS:")
 	for output in outputArray:
-		if not(output.type == "not known") :
-			print("Name: {0} Type: {1}".format(output.name, output.type))
+		if not(output.type == UNKNOWN) :
+			print("OUTPUT Name: {0} Type: {1}".format(output.name, output.type))
 		else :
-			print("Name: {0}".format(output.name))
+			print("OUTPUT Name: {0}".format(output.name))
+	print()
 
 def similarityCheckItems(workflow1, workflow2, attribute, weighting):
 	denominator = 0
@@ -140,3 +160,11 @@ def printItemSimilarityStats(diffSmall, diffBig, smallerWorkflow, biggerWorkflow
 		for item in diffBig : 
 			print(item)
 		print("\n")
+
+def findSource(value):
+	if(value.find("/") != -1):
+		source, rhs = value.split("/", 1)
+		return source
+	else:
+		return TOP
+
