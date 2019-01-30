@@ -10,6 +10,7 @@ from IPython.display import SVG, display
 import time
 import os
 
+
 out_workflow = {}
 steps = []
 STEPS_WEIGHTING = 70
@@ -47,18 +48,21 @@ def loadGitHub(owner, repo, path):
 #You can use this method if you have the .cwl file locally.
 #Make sure that you provide the method with the correct path to the 
 #.cwl file
-def load(workflow):
-	global out_workflow
-	if os.path.exists(workflow):
-		file = open(workflow, 'rb')
-		try:
-			out_workflow = yaml.safe_load(file)
-			return createWorkflowObject(workflow, out_workflow)
-		except (yaml.YAMLError):
-			print ("Error in loading the cwl file")
+def load(workflow, link=False):
+	if(link == False):
+		global out_workflow
+		if os.path.exists(workflow):
+			file = open(workflow, 'rb')
+			try:
+				out_workflow = yaml.safe_load(file)
+				return createWorkflowObject(workflow, out_workflow)
+			except (yaml.YAMLError):
+				print ("Error in loading the cwl file")
+		else:
+			print("File not located")
+			return -1;
 	else:
-		print("File not located")
-		return -1;
+		return loadWithLink(workflow)
 
 #loads workflow when given full url
 def loadWithLink(link, branch='master') :
@@ -108,54 +112,66 @@ def createWorkflowObject(name, workflow) :
 	return workflowObject
 
 
-def displayGraphSVG(link):
-	BASE_URL = 'https://view.commonwl.org'
+def displayGraphSVG(workflow, type="link"):
+	if (type  == "link") :
+		BASE_URL = 'https://view.commonwl.org'
 
-	HEADERS = {
-	    'user-agent': 'my-app/0.0.1',
-		'accept': 'application/json'
-	}
+		HEADERS = {
+		    'user-agent': 'my-app/0.0.1',
+			'accept': 'application/json'
+		}
 
-	addResponse = requests.post(BASE_URL + '/workflows', 
-							data={'url': link},		
-							headers=HEADERS)
-	if (addResponse.status_code == 200) :
-		postExistingWorkflowGraph(link)
-	elif (addResponse.status_code == requests.codes.accepted):
-		qLocation = addResponse.headers['location']
+		addResponse = requests.post(BASE_URL + '/workflows', 
+								data={'url': workflow},		
+								headers=HEADERS)
+		if (addResponse.status_code == 200) :
+			postExistingWorkflowGraph(workflow)
+		elif (addResponse.status_code == requests.codes.accepted):
+			qLocation = addResponse.headers['location']
 
-		# Get the queue item until success
-		qResponse = requests.get(BASE_URL + qLocation,
-								headers=HEADERS,
-								allow_redirects=False)
-		maxAttempts = 5
-		while qResponse.status_code == requests.codes.ok and qResponse.json()['cwltoolStatus'] == 'RUNNING' and maxAttempts > 0:
-			time.sleep(5)
+			# Get the queue item until success
 			qResponse = requests.get(BASE_URL + qLocation,
 									headers=HEADERS,
 									allow_redirects=False)
-			maxAttempts -= 1
-		if 'location' in qResponse.headers:
-		# Success, get the workflow
-			workflowResponse = requests.get(BASE_URL + qResponse.headers['location'], headers=HEADERS)
-			if (workflowResponse.status_code == requests.codes.ok):
-				workflowJson = workflowResponse.json()
-				# Do what you want with the workflow JSON
-				# Include details in documentation files etc
-				display(SVG(BASE_URL + workflowJson['visualisationSvg']))
-			else:
-				print('Could not get returned workflow')
-		elif (qResponse.json()['cwltoolStatus'] == 'ERROR'):
-			# Cwltool failed to run here
-			print(qResponse.json()['message'])
-		elif (maxAttempts == 0):
-			print('Timeout: Cwltool did not finish')
-		else :
-			print('Something is not right')
+			maxAttempts = 5
+			while qResponse.status_code == requests.codes.ok and qResponse.json()['cwltoolStatus'] == 'RUNNING' and maxAttempts > 0:
+				time.sleep(5)
+				qResponse = requests.get(BASE_URL + qLocation,
+										headers=HEADERS,
+										allow_redirects=False)
+				maxAttempts -= 1
+			if 'location' in qResponse.headers:
+			# Success, get the workflow
+				workflowResponse = requests.get(BASE_URL + qResponse.headers['location'], headers=HEADERS)
+				if (workflowResponse.status_code == requests.codes.ok):
+					workflowJson = workflowResponse.json()
+					# Do what you want with the workflow JSON
+					# Include details in documentation files etc
+					display(SVG(BASE_URL + workflowJson['visualisationSvg']))
+				else:
+					print('Could not get returned workflow')
+			elif (qResponse.json()['cwltoolStatus'] == 'ERROR'):
+				# Cwltool failed to run here
+				print(qResponse.json()['message'])
+			elif (maxAttempts == 0):
+				print('Timeout: Cwltool did not finish')
+			else :
+				print('Something is not right')
 
-	else:
-		print (addResponse.status_code)
-		print('Error adding workflow')
+		else:
+			print (addResponse.status_code)
+			print('Error adding workflow')
+	elif (type== "file"):
+		name, suffix = workflow.split(".cwl") 
+		p = subprocess.run(["cwltool", "--print-dot", workflow], capture_output=True)
+		if(p.returncode != 0) :
+			print ("Something went wrong")
+			print(bytes.decode(p.stderr))
+		else :
+			graphFile = name + ".svg"
+			display(SVG(graphFile))
+	else :
+		print("Invalid type")
 
 	"""
 	"""
