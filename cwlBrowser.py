@@ -45,9 +45,8 @@ def loadGitHub(owner, repo, path):
 	
 
 
-#You can use this method if you have the .cwl file locally.
-#Make sure that you provide the method with the correct path to the 
-#.cwl file
+#If you are passing the workflow argument as a link make sure that you also
+#pass the argument True to indicate that
 def load(workflow, link=False):
 	if(link == False):
 		global out_workflow
