@@ -12,7 +12,7 @@ def printAttr(attribute, attributeName, subjectName):
 			print(item)
 	print("\n")
 
-def instantiateInputs(inputs, workflowGraph=[]) :
+def instantiateInputs(inputs, workflowGraph, step=False, stepName="step") :
 	temp = []
 	#input list is in the form of a dict ({})
 	if(isinstance(inputs, dict)) :
@@ -22,11 +22,18 @@ def instantiateInputs(inputs, workflowGraph=[]) :
 			if(isinstance(value, str)) :
 				type_ = UNKNOWN
 				source = findSource(value)
+				if(step == True) :
+					#input is the parent
+					if (source == TOP) :
+						workflowGraph[value].append(stepName)
+					#step that fed current step input is parent
+					else :
+						workflowGraph[source].append(stepName)
 			#input itself is a dict
 			else :
 				type_ = UNKNOWN if not ("type" in value) else value["type"]
 			item = wf.Input(key, type_, source)
-			if(isinstance(workflowGraph, dict)) :
+			if(step == False) :
 				workflowGraph[key] = []
 			temp.append(item)
 	#input list is in the form of a list ([])
@@ -37,6 +44,13 @@ def instantiateInputs(inputs, workflowGraph=[]) :
 				type_ = UNKNOWN
 				source = findSource(input_)
 				inputName = input_
+				if(step == True) :
+					#input is the parent
+					if (source == TOP) :
+						workflowGraph[input_].append(stepName)
+					#step that fed current step input is parent
+					else :
+						workflowGraph[source].append(stepName)
 			#input is a dict 
 			else :
 				type_ = UNKNOWN if not ("type" in input_) else input_["type"]
@@ -44,11 +58,12 @@ def instantiateInputs(inputs, workflowGraph=[]) :
 				if ("source" in input_) :
 					if(isinstance(input_["source"], str)) :
 						source = findSource(input_["source"])
-					elif(isinstance(input_["source"], list)) :
 						type_ = "list"
 					else :
 						print("Invalid input type")
 			inputObj = wf.Input(inputName, type_, source)
+			if(step == False) :
+				workflowGraph[inputName] = []
 			temp.append(inputObj)
 	return  temp
 
