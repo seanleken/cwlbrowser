@@ -9,6 +9,7 @@ class Workflow:
 		self.stepArray = []
 		self.outputs = outputs
 		self.steps = steps
+		self.graph = {}
 
 
 	def printInputs(self):
@@ -30,6 +31,8 @@ class Workflow:
 			print("")
 		print("-------------------------------------------------")
 
+	def printGraph(self):
+		print(self.graph)
 
 	
 

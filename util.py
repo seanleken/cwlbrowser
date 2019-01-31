@@ -12,7 +12,7 @@ def printAttr(attribute, attributeName, subjectName):
 			print(item)
 	print("\n")
 
-def instantiateInputs(inputs) :
+def instantiateInputs(inputs, workflowGraph=[]) :
 	temp = []
 	#input list is in the form of a dict ({})
 	if(isinstance(inputs, dict)) :
@@ -26,6 +26,8 @@ def instantiateInputs(inputs) :
 			else :
 				type_ = UNKNOWN if not ("type" in value) else value["type"]
 			item = wf.Input(key, type_, source)
+			if(isinstance(workflowGraph, dict)) :
+				workflowGraph[key] = []
 			temp.append(item)
 	#input list is in the form of a list ([])
 	else :
