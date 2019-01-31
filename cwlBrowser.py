@@ -65,11 +65,11 @@ def load(workflow, link=False):
 		return loadWithLink(workflow)
 
 #loads workflow when given full url
-def loadWithLink(link, branch='master') :
+def loadWithLink(link) :
 	lhs, rhs = link.split("/blob/", 1)
-	path = rhs.replace(branch, "")
+	branch, path = rhs.split("/", 1)
 	ownerrepo = lhs.replace('https://github.com', "")
-	finallink = "https://api.github.com/repos" + ownerrepo + "/contents" + path
+	finallink = "https://api.github.com/repos" + ownerrepo + "/contents/" + path
 	return retrieveFileThruLink(finallink, path)
 
 

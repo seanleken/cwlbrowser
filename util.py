@@ -39,7 +39,13 @@ def instantiateInputs(inputs) :
 			else :
 				type_ = UNKNOWN if not ("type" in input_) else input_["type"]
 				inputName= input_ if not ("id" in input_) else input_["id"]
-				source = TOP if not ("source" in input_) else input_["source"]
+				if ("source" in input_) :
+					if(isinstance(input_["source"], str)) :
+						source = findSource(input_["source"])
+					elif(isinstance(input_["source"], list)) :
+						type_ = "list"
+					else :
+						print("Invalid input type")
 			inputObj = wf.Input(inputName, type_, source)
 			temp.append(inputObj)
 	return  temp
@@ -93,6 +99,8 @@ def printInputArray(name, inputArray):
 		else :
 			print("INPUT Name: {0} Source: {1}".format(input_.name, input_.source))
 	print()
+
+
 
 def printOutputArray(name, outputArray):
 	print(name + " OUTPUTS:")
