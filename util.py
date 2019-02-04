@@ -13,78 +13,85 @@ def printAttr(attribute, attributeName, subjectName):
 	print("\n")
 
 def instantiateInputs(inputs, workflowGraph, step=False, stepName="step") :
-	temp = []
-	#input list is in the form of a dict ({})
+	temp =[]
 	if(isinstance(inputs, dict)) :
 		for key, value in inputs.items() :
-			source = TOP
-			#checks if input is in form of string(reference to declared input)
-			if(isinstance(value, str)) :
-				type_ = UNKNOWN
-				source = findSource(value)
-				if(step == True) :
-					#input is the parent
-					if (source == TOP) :
-						workflowGraph[value].append(stepName)
-					#step that fed current step input is parent
-					else :
-						workflowGraph[source].append(stepName)
-			#input itself is a dict
-			else :
-				type_ = UNKNOWN if not ("type" in value) else value["type"]
-			item = wf.Input(key, type_, source)
-			if(step == False) :
-				workflowGraph[key] = []
-			temp.append(item)
-	#input list is in the form of a list ([])
-	else :
+			setUpInputs(value, step, stepName, workflowGraph, temp, name=key)
+	elif (isinstance(inputs, list)) :
 		for input_ in inputs :
-			source = TOP
-			if(isinstance(input_, str)) :
-				type_ = UNKNOWN
-				source = findSource(input_)
-				inputName = input_
+			setUpInputs(input_, step, stepName, workflowGraph, temp, name=input_)
+	else :
+		print("invalid input")
+	return temp
+
+
+def setUpInputs(value, step, stepName, workflowGraph, temp, name="input") :
+	source = TOP
+	#checks if input is in form of string(reference to declared input)
+	if(isinstance(value, str)) :
+		type_ = UNKNOWN
+		inputName = name
+		source = findSource(value)
+		if(step == True) :
+			#input is the parent
+			if (source == TOP) :
+				workflowGraph[value].append(stepName)
+			#step that fed current step input is parent
+			else :
+				workflowGraph[source].append(stepName)
+	#input itself is a dict
+	else :
+		type_ = UNKNOWN if not ("type" in value) else value["type"]
+		inputName= name if not ("id" in value) else value["id"]
+		if ("source" in value) :
+			if(isinstance(value["source"], str)) :
+				source = findSource(value["source"])
+				type_ = "list"
 				if(step == True) :
 					#input is the parent
 					if (source == TOP) :
-						workflowGraph[input_].append(stepName)
+						workflowGraph[value["source"]].append(stepName)
 					#step that fed current step input is parent
 					else :
 						workflowGraph[source].append(stepName)
-			#input is a dict 
 			else :
-				type_ = UNKNOWN if not ("type" in input_) else input_["type"]
-				inputName= input_ if not ("id" in input_) else input_["id"]
-				if ("source" in input_) :
-					if(isinstance(input_["source"], str)) :
-						source = findSource(input_["source"])
-						type_ = "list"
-					else :
-						print("Invalid input type")
-			inputObj = wf.Input(inputName, type_, source)
-			if(step == False) :
-				workflowGraph[inputName] = []
-			temp.append(inputObj)
-	return  temp
+				print("Invalid input type")
+	item = wf.Input(name, type_, source)
+	if(step == False) :
+		workflowGraph[inputName] = []
+	temp.append(item)
 
-def instantiateOutputs(outputs) :
+
+
+def instantiateOutputs(outputs, workflowGraph, step=False) :
 	temp = []
 	if(isinstance(outputs, dict)) :
 		for key, value in outputs.items() :
-			type_ = UNKNOWN if not ("type" in value) else value["type"]
-			item = wf.Output(key, type_)
-			temp.append(item)
-	else :
+			setUpOutputs(value, workflowGraph, step, temp, key)
+	elif(isinstance, list) :
 		for output in outputs :
-			if (isinstance(output, dict)) :
-				type_ = UNKNOWN if not ("type" in output) else output["type"]
-				outputName = output if not ("id" in output) else output["id"]
-				outputObj = wf.Output(outputName, type_)
-			else :
-				outputObj = wf.Output(output, UNKNOWN)
-			temp.append(outputObj)
-	return  temp
+			setUpOutputs(output, workflowGraph, step, temp, output)
+	else :
+		print("Invalid output")
+	return temp
 
+
+def setUpOutputs(value, workflowGraph, step, temp, name="output") :
+	if (isinstance(value, dict)) :
+		type_ = UNKNOWN if not ("type" in value) else value["type"]
+		outputName = name if not ("id" in value) else value["id"]
+		outputObj = wf.Output(outputName, type_)
+		if(step == False) :
+			if("outputSource" in value) :
+				source = findSource(value["outputSource"])
+				workflowGraph[source].append(name)
+			else :
+				print("Output MUST have outputSource attribute")
+    #string
+	else :
+		outputObj = wf.Output(name, UNKNOWN)
+
+	temp.append(outputObj)
 
 def compare(name1, name2,attributeX, attributeY, attributeName):
 	count1 = 0

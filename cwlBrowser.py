@@ -106,8 +106,8 @@ def createWorkflowObject(name, workflow) :
 										, workflow["steps"])
 	workflowInputs = []
 	workflowObject.inputArray = util.instantiateInputs(workflow["inputs"], workflowGraph=workflowObject.graph)
-	workflowObject.outputArray = util.instantiateOutputs(workflow["outputs"])
 	workflowObject.stepArray = instantiateSteps(workflow["steps"], workflowObject.graph)
+	workflowObject.outputArray = util.instantiateOutputs(workflow["outputs"], workflowGraph=workflowObject.graph)
 	return workflowObject
 
 

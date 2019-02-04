@@ -56,7 +56,7 @@ class Step:
 		self.in_ = in_
 		self.out = out
 		self.inputArray = util.instantiateInputs(in_, workflowGraph, step=True, stepName=name)
-		self.outputArray = util.instantiateOutputs(out)
+		self.outputArray = util.instantiateOutputs(out, workflowGraph, step=True)
 		self.run = run
 
 
