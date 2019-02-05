@@ -54,9 +54,12 @@ def setUpInputs(value, step, stepName, workflowGraph, temp, name="input") :
 					#step that fed current step input is parent
 					else :
 						workflowGraph[source].append(stepName)
-			else :
-				print("Invalid input type")
-	item = wf.Input(name, type_, source)
+			elif (isinstance(value["source"], list)):
+				for item in value["source"] :
+					setUpInputs(item, step, stepName, workflowGraph, temp, item)
+			else : 
+				print("Invalid input source")
+	item = wf.Input(inputName, type_, source)
 	if(step == False) :
 		workflowGraph[inputName] = []
 	temp.append(item)
@@ -84,7 +87,7 @@ def setUpOutputs(value, workflowGraph, step, temp, name="output") :
 		if(step == False) :
 			if("outputSource" in value) :
 				source = findSource(value["outputSource"])
-				workflowGraph[source].append(name)
+				workflowGraph[source].append(outputName)
 			else :
 				print("Output MUST have outputSource attribute")
     #string
