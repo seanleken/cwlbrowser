@@ -58,7 +58,7 @@ class Step:
 		self.inputArray = util.instantiateInputs(in_, workflowGraph, step=True, stepName=name)
 		self.outputArray = util.instantiateOutputs(out, workflowGraph, step=True)
 		self.run = run
-
+		#__str__(self) ==
 
 class Input:
 	def __init__(self, name, type, source="WORKFLOW"):
