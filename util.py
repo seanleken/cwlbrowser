@@ -93,7 +93,8 @@ def setUpOutputs(value, workflowGraph, step, temp, name="output") :
     #string
 	else :
 		outputObj = wf.Output(name, UNKNOWN)
-
+	if(step == False) :
+		workflowGraph[outputName] = []
 	temp.append(outputObj)
 
 def compare(name1, name2,attributeX, attributeY, attributeName):
@@ -118,26 +119,6 @@ def compare(name1, name2,attributeX, attributeY, attributeName):
 	print("\n")
 
 
-def printInputArray(name, inputArray):
-	print(name + " INPUTS:")
-	for input_ in inputArray:
-		if not(input_.type == UNKNOWN):
-			print("INPUT Name: {0} Type: {1} Source: {2}".format(input_.name, input_.type, input_.source))
-		else :
-			print("INPUT Name: {0} Source: {1}".format(input_.name, input_.source))
-	print()
-
-
-
-def printOutputArray(name, outputArray):
-	print(name + " OUTPUTS:")
-	for output in outputArray:
-		if not(output.type == UNKNOWN) :
-			print("OUTPUT Name: {0} Type: {1}".format(output.name, output.type))
-		else :
-			print("OUTPUT Name: {0}".format(output.name))
-	print()
-
 def similarityCheckItems(workflow1, workflow2, attribute, weighting):
 	denominator = 0
 	numerator = 0
@@ -147,14 +128,14 @@ def similarityCheckItems(workflow1, workflow2, attribute, weighting):
 	differingItemsForSmallerList  = []
 	differingItemsForBiggerList = []
 	if attribute == "steps" :
-		list1 = workflow1.stepArray
-		list2 = workflow2.stepArray
+		list1 = workflow1.steps
+		list2 = workflow2.steps
 	elif attribute == "inputs" :
-		list1 = workflow1.inputArray
-		list2 = workflow2.inputArray
+		list1 = workflow1.inputs
+		list2 = workflow2.inputs
 	elif attribute == "outputs" :
-		list1 = workflow1.outputArray
-		list2 = workflow2.outputArray
+		list1 = workflow1.outputs
+		list2 = workflow2.outputs
 	else :
 		print("Invalid attribute")
 		return

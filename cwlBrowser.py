@@ -35,16 +35,6 @@ def retrieveFileThruLink(link, path):
 			print ("Error in loading the cwl file")
 			print (yamlError)
 
-#Loads workflow via github API
-#In order to use this method you must provide it with the name of the owner (according to github),
-#name of the repo, and the path (use copy path on the github page for the file)
-def loadGitHub(owner, repo, path):
-	global out_workflow
-	link = "https://api.github.com/repos/" + owner + "/" + repo + "/contents/" + path
-	return retrieveFileThruLink(link, path)
-	
-
-
 #If you are passing the workflow argument as a link make sure that you also
 #pass the argument True to indicate that
 def load(workflow, link=False):
@@ -102,12 +92,10 @@ def packWorkflow(workflow) :
 
 #creates workflow object from dict
 def createWorkflowObject(name, workflow) :
-	workflowObject = wf.Workflow(name, workflow["inputs"], workflow["outputs"]
-										, workflow["steps"])
-	workflowInputs = []
-	workflowObject.inputArray = util.instantiateInputs(workflow["inputs"], workflowGraph=workflowObject.graph)
-	workflowObject.stepArray = instantiateSteps(workflow["steps"], workflowObject.graph)
-	workflowObject.outputArray = util.instantiateOutputs(workflow["outputs"], workflowGraph=workflowObject.graph)
+	workflowObject = wf.Workflow(name)
+	workflowObject.inputs = util.instantiateInputs(workflow["inputs"], workflowGraph=workflowObject.graph)
+	workflowObject.steps = instantiateSteps(workflow["steps"], workflowObject.graph)
+	workflowObject.outputs = util.instantiateOutputs(workflow["outputs"], workflowGraph=workflowObject.graph)
 	return workflowObject
 
 
