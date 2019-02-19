@@ -1,6 +1,6 @@
 import unittest
-import util 
-import cwlBrowser as c
+import src.util as util
+import src.cwlBrowser as c
 
 class WorkFlowInstantiationTest(unittest.TestCase) :
 

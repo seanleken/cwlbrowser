@@ -1,4 +1,4 @@
-import util
+import src.util as util
 
 class Workflow:
 	def __init__(self, name):

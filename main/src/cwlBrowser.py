@@ -4,8 +4,8 @@ import yaml
 import os
 import cwltool
 import subprocess
-import workflow as wf
-import util
+import src.workflow as wf
+import src.util as util
 from IPython.display import SVG, display
 import time
 import os

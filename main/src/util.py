@@ -1,4 +1,4 @@
-import workflow as wf
+import src.workflow as wf
 TOP = "WORKFLOW"
 UNKNOWN = "not known"
 
