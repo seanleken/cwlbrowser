@@ -92,7 +92,8 @@ def setUpOutputs(value, workflowGraph, step, temp, name="output") :
 				print("Output MUST have outputSource attribute")
     #string
 	else :
-		outputObj = wf.Output(name, UNKNOWN)
+		outputName = name
+		outputObj = wf.Output(outputName, UNKNOWN)
 	if(step == False) :
 		workflowGraph[outputName] = []
 	temp.append(outputObj)
