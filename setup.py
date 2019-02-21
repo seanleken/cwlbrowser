@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='cwlbrowser',
-      version='2.4',
+      version='2.5',
       description='Python library that browses and analyses workflows in CWL',
       url='https://gitlab.cs.man.ac.uk/mbaxasp7/cwlbrowser',
       author='Sean Pertet',

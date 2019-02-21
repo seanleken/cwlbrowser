@@ -87,7 +87,7 @@ def createWorkflowObject(name, workflow) :
 	return workflowObject
 
 
-def displayGraphSVG(workflow, type="link"):
+def displayGraph(workflow, type="link"):
 	if (type  == "link") :
 		BASE_URL = 'https://view.commonwl.org'
 
