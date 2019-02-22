@@ -21,7 +21,7 @@ def instantiateInputs(inputs, workflowGraph, step=False, stepName="step") :
 		for input_ in inputs :
 			setUpInputs(input_, step, stepName, workflowGraph, temp, name=input_)
 	else :
-		print("invalid input")
+		temp = []
 	return temp
 
 
@@ -71,11 +71,11 @@ def instantiateOutputs(outputs, workflowGraph, step=False) :
 	if(isinstance(outputs, dict)) :
 		for key, value in outputs.items() :
 			setUpOutputs(value, workflowGraph, step, temp, key)
-	elif(isinstance, list) :
+	elif(isinstance(outputs, list)) :
 		for output in outputs :
 			setUpOutputs(output, workflowGraph, step, temp, output)
 	else :
-		print("Invalid output")
+		temp = []
 	return temp
 
 
@@ -185,13 +185,22 @@ def findSource(value):
 	else:
 		return TOP
 
-def loadExpectedValuesFile(filename) :
-	#reads file line by line then returns list
-	file = open(filename, 'r')
+def getInputNames(workflow) :
+	return getObjectNames(workflow.inputs)
+
+def getOutputNames(workflow) :
+	return getObjectNames(workflow.outputs)
+
+def getStepNames(workflow) :
+	return getObjectNames(workflow.steps)
+
+def getObjectNames(objectList) :
 	temp = []
-	for line in file :
-		temp.append(line)
+	for element in objectList :
+		temp.append(element.name)
 	return temp
+
+
 
 	
 

@@ -9,8 +9,15 @@ wf = yaml.safe_load(file)
 outputfilename = 'doc/{}_expected_{}.txt'.format(inputworkflow, attribute)
 outputfile = open(outputfilename, 'w+')
 temp = [] 
-for element in wf[attribute] :
-	outputfile.write('{}\n'.format(element))
+if (isinstance(wf[attribute], dict)) :  
+	for element in wf[attribute] :
+		outputfile.write('"{}", '.format(element))
+elif isinstance(wf[attribute], list) :
+	for element in wf[attribute] :
+		if "id" in element :
+			outputfile.write('"{}",'.format(element["id"]))
+		else :
+			outputfile.write('{}'.format(element))
 print('written to {}'.format(outputfilename))
 outputfile.close
 file.close

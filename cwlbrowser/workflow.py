@@ -4,6 +4,8 @@ class Workflow:
 	def __init__(self, name):
 		self.name = name;
 		self.inputs = []
+		self.inputNames = []
+		self.inputTypes = []
 		self.steps = []
 		self.outputs = []
 		self.graph = {}		
