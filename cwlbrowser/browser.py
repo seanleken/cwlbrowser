@@ -81,9 +81,9 @@ def printWorkflowAttr(attribute) :
 #creates workflow object from dict
 def createWorkflowObject(name, workflow) :
 	workflowObject = wf.Workflow(name)
-	workflowObject.inputs = util.instantiateInputs(workflow["inputs"], workflowGraph=workflowObject.graph)
-	workflowObject.steps = instantiateSteps(workflow["steps"], workflowObject.graph)
-	workflowObject.outputs = util.instantiateOutputs(workflow["outputs"], workflowGraph=workflowObject.graph)
+	workflowObject.inputs = util.instantiateInputs(workflow["inputs"])
+	workflowObject.steps = instantiateSteps(workflow["steps"])
+	workflowObject.outputs = util.instantiateOutputs(workflow["outputs"])
 	return workflowObject
 
 
@@ -176,18 +176,16 @@ def compareNoOfSteps(workflow1, workflow2):
 	util.compare(workflow1.name, workflow2.name, workflow1.steps, workflow2.steps, "steps")
 
 
-def instantiateSteps(steps, workflowGraph) :
+def instantiateSteps(steps) :
 	temp = []
 	#print (steps)
 	if (isinstance(steps, dict)) :
 		for key, value in steps.items() :
-			item = wf.Step(key, value["in"], value["run"], value["out"], workflowGraph)
-			workflowGraph[key] = []
-			temp.append(item)
+			stepObj = wf.Step(key, value["in"], value["run"], value["out"])
+			temp.append(stepObj)
 	else :
 		for step in steps :
-			stepObj = wf.Step(step["id"], step["in"], step["run"], step["out"], workflowGraph)
-			workflowGraph[step["id"]] = []
+			stepObj = wf.Step(step["id"], step["in"], step["run"], step["out"])
 			temp.append(stepObj)
 	return temp
 
