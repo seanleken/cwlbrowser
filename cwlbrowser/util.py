@@ -1,9 +1,6 @@
 import cwlbrowser.workflow as wf
-TOP = "WORKFLOW"
-UNKNOWN = "not known"
-NAME = 1
-TYPE = 2
-RUN = 3
+import cwlbrowser.input_output as io
+
 
 def printAttr(attribute, attributeName, subjectName):
 	print(subjectName + " " + attributeName + ":")
@@ -15,56 +12,6 @@ def printAttr(attribute, attributeName, subjectName):
 			print(item)
 	print("\n")
 
-def instantiateInputs(inputs) :
-	temp =[]
-	if(isinstance(inputs, dict)) :
-		for key, value in inputs.items() :
-			setUpInputs(value, temp, name=key)
-	elif (isinstance(inputs, list)) :
-		for input_ in inputs :
-			setUpInputs(input_, temp, name=input_)
-	else :
-		temp = []
-	return temp
-
-
-def setUpInputs(value, temp, name="input") :
-	#checks if input is in form of string(reference to declared input)
-	if(isinstance(value, str)) :
-		type_ = UNKNOWN
-		inputName = name
-	#input itself is a dict
-	else :
-		type_ = UNKNOWN if not ("type" in value) else value["type"]
-		inputName= name if not ("id" in value) else value["id"]
-	item = wf.Input(inputName, type_)
-	temp.append(item)
-
-
-
-def instantiateOutputs(outputs) :
-	temp = []
-	if(isinstance(outputs, dict)) :
-		for key, value in outputs.items() :
-			setUpOutputs(value, temp, key)
-	elif(isinstance(outputs, list)) :
-		for output in outputs :
-			setUpOutputs(output, temp, output)
-	else :
-		temp = []
-	return temp
-
-
-def setUpOutputs(value, temp, name="output") :
-	if (isinstance(value, dict)) :
-		type_ = UNKNOWN if not ("type" in value) else value["type"]
-		outputName = name if not ("id" in value) else value["id"]
-		outputObj = wf.Output(outputName, type_)
-    #string
-	else :
-		outputName = name
-		outputObj = wf.Output(outputName, UNKNOWN)
-	temp.append(outputObj)
 
 def compare(name1, name2,attributeX, attributeY, attributeName):
 	count1 = 0
@@ -146,21 +93,22 @@ def printItemSimilarityStats(diffSmall, diffBig, smallerWorkflow, biggerWorkflow
 			print(item)
 		print("\n")
 
+def createInputOutputArray(elements) :
+	temp =[]
+	if(isinstance(elements, dict)) :
+		for key, value in elements.items() :
+			obj = io.InputOutput(value, name=key) 
+			temp.append(obj)
+	elif (isinstance(elements, list)) :
+		for e in elements :
+			obj = io.InputOutput(e) 
+			temp.append(obj)
+	else :
+		temp = []
+	return temp
 
 
 
-def getInputTypes(workflow) :
-	return getObjectAttribute(workflow.inputs, TYPE)
-
-
-
-def getOutputTypes(workflow) :
-	return getObjectAttribute(workflow.outputs, TYPE)
-
-
-
-def getStepRuns(workflow) :
-	return getObjectAttribute(workflow.steps, RUN)
 
 
 

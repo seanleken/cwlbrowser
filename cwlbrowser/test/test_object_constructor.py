@@ -1,6 +1,7 @@
 import unittest
 import cwlbrowser.browser as c 
 import cwlbrowser.util as util
+import cwlbrowser.workflow as wf
 #Tests processing of workflows after being parsed by YAML parser
 class LobstrTest(unittest.TestCase) :
 	def setUp(self) :
@@ -19,8 +20,7 @@ class LobstrTest(unittest.TestCase) :
 		#runs(implementations) of steps
 		self.expectedStepRuns = ["lobSTR-tool.cwl","samtools-sort.cwl","samtools-index.cwl","allelotype.cwl"]
 
-		#parsed workflow files in the form of dicts that are inputs for 
-		#createWorkflowObject method in browser.py
+		#workflow after being parsed by workflow parser
 		self.lobSTR = {'cwlVersion': 'v1.0', 'class': 'Workflow', 
 				'inputs': 
 				{'p1': {'type': 'File[]?', 'description': 'list of files containing the first end of paired end reads in fasta or fastq format'}, 
@@ -38,7 +38,7 @@ class LobstrTest(unittest.TestCase) :
 	"""Tests the creation of a workflow object for a non-id type workflow (workflow whose elements are
 	  not identified with an id field)"""
 	def test_instantiation_for_lobstr(self) :
-		lobstr_workflow = c.createWorkflowObject('lobSTR.cwl', self.lobSTR)
+		lobstr_workflow = wf.Workflow('lobSTR.cwl', self.lobSTR)
 		self.assertEqual(lobstr_workflow.getInputsByName(), self.expectedInputs)
 		self.assertEqual(lobstr_workflow.getOutputsByName(), self.expectedOutputs)
 		self.assertEqual(lobstr_workflow.getStepsByName(), self.expectedSteps)
@@ -66,7 +66,7 @@ class LobstrStepTest(unittest.TestCase) :
 				'outputs': {'bam': {'type': 'File', 'outputSource': 'samindex/bam_with_bai'}, 'bam_stats': {'type': 'File', 'outputSource': 'lobSTR/bam_stats'}, 'vcf': {'type': 'File', 'outputSource': 'allelotype/vcf'}, 'vcf_stats': {'type': 'File', 'outputSource': 'allelotype/vcf_stats'}}, 'hints': {'DockerRequirement': {'dockerPull': 'rabix/lobstr'}}, 'steps': {'lobSTR': {'run': 'lobSTR-tool.cwl', 'in': {'p1': 'p1', 'p2': 'p2', 'output_prefix': 'output_prefix', 'reference': 'reference', 'rg-sample': 'rg-sample', 'rg-lib': 'rg-lib'}, 'out': ['bam', 'bam_stats']}, 'samsort': {'run': 'samtools-sort.cwl', 'in': {'input': 'lobSTR/bam', 'output_name': {'default': 'aligned.sorted.bam'}}, 'out': ['output_file']}, 'samindex': {'run': 'samtools-index.cwl', 'in': {'input': 'samsort/output_file'}, 'out': ['bam_with_bai']}, 'allelotype': {'run': 'allelotype.cwl', 'in': {'bam': 'samindex/bam_with_bai', 'reference': 'reference', 'output_prefix': 'output_prefix', 'noise_model': 'noise_model', 'strinfo': 'strinfo'}, 'out': ['vcf', 'vcf_stats']}}}
 
 	def test_instantiation_of_lobstr_step(self) :
-		lobstr_workflow = c.createWorkflowObject('lobstr', self.lobstr)
+		lobstr_workflow = wf.Workflow('lobstr', self.lobstr)
 		self.assertEqual(lobstr_workflow.steps[0].getInputsByName(), self.expectedInputs)
 		self.assertEqual(lobstr_workflow.steps[0].getOutputsByName(), self.expectedOutputs)
 		self.assertEqual(lobstr_workflow.steps[0].getInputsByType(), self.expectedInputTypes)
@@ -92,7 +92,7 @@ class ConcordanceTest(unittest.TestCase) :
 	"""Test the creation of a workflow object for an id type workflow (workflow whose elements are 
 		identified with an id field)"""
 	def test_instantiation_of_concordance(self) :
-		concordance_workflow = c.createWorkflowObject('concordance.cwl', self.concordance)
+		concordance_workflow = wf.Workflow('concordance.cwl', self.concordance)
 		self.assertEqual(concordance_workflow.getInputsByName(), self.expectedInputs)
 		self.assertEqual(concordance_workflow.getOutputsByName(), self.expectedOutputs)
 		self.assertEqual(concordance_workflow.getStepsByName(), self.expectedSteps)
@@ -112,7 +112,7 @@ class ConcordanceStepTest(unittest.TestCase) :
 
 
 	def test_instantiation_of_concordance_step(self) :
-		concordance_workflow = c.createWorkflowObject('concordance_workflow', self.concordance)
+		concordance_workflow = wf.Workflow('concordance_workflow', self.concordance)
 		self.assertEqual(concordance_workflow.steps[0].getInputsByName(), self.expectedInputs)
 		self.assertEqual(concordance_workflow.steps[0].getInputsByType(), self.expectedInputTypes)
 		self.assertEqual(concordance_workflow.steps[0].getOutputsByName(), self.expectedOutputs)

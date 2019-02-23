@@ -30,7 +30,7 @@ def retrieveFileThruLink(link, path):
 		try:
 			out_workflow = yaml.safe_load(content)
 			#print (out_workflow)
-			return createWorkflowObject(path, out_workflow)
+			return wf.Workflow(path, out_workflow)
 		except (yaml.YAMLError) as yamlError:
 			print ("Error in loading the cwl file")
 			print (yamlError)
@@ -44,7 +44,7 @@ def load(workflow, link=False):
 			file = open(workflow, 'rb')
 			try:
 				out_workflow = yaml.safe_load(file)
-				return createWorkflowObject(workflow, out_workflow)
+				return wf.Workflow(workflow, out_workflow)
 			except (yaml.YAMLError):
 				print ("Error in loading the cwl file")
 		else:
@@ -61,11 +61,6 @@ def loadWithLink(link) :
 	finallink = "https://api.github.com/repos" + ownerrepo + "/contents/" + path
 	return retrieveFileThruLink(finallink, path)
 
-
-
-
-
-
 #print the specified attribute you want 
 #pass the attribute as a string to the method
 #E.G. printWorfklow("inputs")
@@ -78,13 +73,6 @@ def printWorkflowAttr(attribute) :
 	else :
 		print("No such attribute as: " + attribute + " found in workflow")
 
-#creates workflow object from dict
-def createWorkflowObject(name, workflow) :
-	workflowObject = wf.Workflow(name)
-	workflowObject.inputs = util.instantiateInputs(workflow["inputs"])
-	workflowObject.steps = instantiateSteps(workflow["steps"])
-	workflowObject.outputs = util.instantiateOutputs(workflow["outputs"])
-	return workflowObject
 
 
 def displayGraph(workflow, type="link"):
@@ -175,19 +163,6 @@ def compareNoOfOutputs(workflow1, workflow2):
 def compareNoOfSteps(workflow1, workflow2):
 	util.compare(workflow1.name, workflow2.name, workflow1.steps, workflow2.steps, "steps")
 
-
-def instantiateSteps(steps) :
-	temp = []
-	#print (steps)
-	if (isinstance(steps, dict)) :
-		for key, value in steps.items() :
-			stepObj = wf.Step(key, value["in"], value["run"], value["out"])
-			temp.append(stepObj)
-	else :
-		for step in steps :
-			stepObj = wf.Step(step["id"], step["in"], step["run"], step["out"])
-			temp.append(stepObj)
-	return temp
 
 def similarityCheck(workflow1, workflow2):
 	(stepSimilarity, diffSmall, diffBig, smallerWorkflow, biggerWorkflow) = similarityCheckSteps(workflow1, workflow2)
