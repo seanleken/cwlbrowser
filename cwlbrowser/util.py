@@ -1,6 +1,9 @@
 import cwlbrowser.workflow as wf
 TOP = "WORKFLOW"
 UNKNOWN = "not known"
+NAME = 1
+TYPE = 2
+RUN = 3
 
 def printAttr(attribute, attributeName, subjectName):
 	print(subjectName + " " + attributeName + ":")
@@ -144,20 +147,22 @@ def printItemSimilarityStats(diffSmall, diffBig, smallerWorkflow, biggerWorkflow
 		print("\n")
 
 
-def getInputNames(workflow) :
-	return getObjectNames(workflow.inputs)
 
-def getOutputNames(workflow) :
-	return getObjectNames(workflow.outputs)
 
-def getStepNames(workflow) :
-	return getObjectNames(workflow.steps)
+def getInputTypes(workflow) :
+	return getObjectAttribute(workflow.inputs, TYPE)
 
-def getObjectNames(objectList) :
-	temp = []
-	for element in objectList :
-		temp.append(element.name)
-	return temp
+
+
+def getOutputTypes(workflow) :
+	return getObjectAttribute(workflow.outputs, TYPE)
+
+
+
+def getStepRuns(workflow) :
+	return getObjectAttribute(workflow.steps, RUN)
+
+
 
 
 

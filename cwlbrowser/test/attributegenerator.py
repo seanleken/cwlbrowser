@@ -8,16 +8,26 @@ file = open('doc/{}.cwl'.format(inputworkflow))
 wf = yaml.safe_load(file)
 outputfilename = 'doc/{}_expected_{}.txt'.format(inputworkflow, attribute)
 outputfile = open(outputfilename, 'w+')
-temp = [] 
-if (isinstance(wf[attribute], dict)) :  
-	for element in wf[attribute] :
-		outputfile.write('"{}", '.format(element))
-elif isinstance(wf[attribute], list) :
-	for element in wf[attribute] :
-		if "id" in element :
-			outputfile.write('"{}",'.format(element["id"]))
-		else :
-			outputfile.write('{}'.format(element))
+steps = wf[attribute]
+for key, value in steps.items() :
+	if isinstance(value["out"], dict) :
+		for k, v in value["out"].items() :
+			if "type" in v :
+				outputfile.write('"{}", '.format(v["type"]))
+			else :
+				outputfile.write('"not known", ')
+	elif isinstance(value["out"], list) :
+		for output in value["out"] :
+			if isinstance(output, str) :
+				outputfile.write('"not known", ')
+			elif isinstance(output, dict) :
+				if "type" in output :
+					outputfile.write('"{}"'.format(output["type"]))
+				else :
+					outputfile.write('"not known", ')
+			else:
+				print("cba")
+	outputfile.write("\n")
 print('written to {}'.format(outputfilename))
 outputfile.close
 file.close
