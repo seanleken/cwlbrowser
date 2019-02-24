@@ -35,64 +35,6 @@ def compare(name1, name2,attributeX, attributeY, attributeName):
 	print("\n")
 
 
-def similarityCheckItems(workflow1, workflow2, attribute, weighting):
-	denominator = 0
-	numerator = 0
-	biggerList = []
-	smallerList = []
-	matchingItems = []
-	differingItemsForSmallerList  = []
-	differingItemsForBiggerList = []
-	if attribute == "steps" :
-		list1 = workflow1.steps
-		list2 = workflow2.steps
-	elif attribute == "inputs" :
-		list1 = workflow1.inputs
-		list2 = workflow2.inputs
-	elif attribute == "outputs" :
-		list1 = workflow1.outputs
-		list2 = workflow2.outputs
-	else :
-		print("Invalid attribute")
-		return
-
-	if(len(list1) >= len(list2)) :
-		for item in list1 :
-			biggerList.append(item.name)
-		biggerWorkflow = workflow1.name
-		smallerWorkflow = workflow2.name
-		for item in  list2 :
-			smallerList.append(item.name)
-	else :
-		for item in list2 :
-			biggerList.append(item.name)
-		biggerWorkflow = workflow2.name
-		smallerWorkflow = workflow1.name
-		for item in list1 :
-			smallerList.append(item.name)
-	denominator = 0 if not (len(biggerList) > 0) else len(biggerList)
-	matchingItems = set(smallerList).intersection(biggerList) 
-	if(len(matchingItems) != len(biggerList)) :
-		differingItemsForSmallerList = set(smallerList).difference(biggerList)
-		differingItemsForBiggerList = set(biggerList).difference(smallerList)
-	numerator =len(matchingItems)
-	return ((numerator /  denominator) * weighting), differingItemsForSmallerList, differingItemsForBiggerList, smallerWorkflow, biggerWorkflow
-
-def printItemSimilarityStats(diffSmall, diffBig, smallerWorkflow, biggerWorkflow, attribute) :
-	if ((len(diffSmall)) > 0 or (len(diffBig)) > 0) :
-		print ("THE FOLLOWING ARE THE {} THAT DIFFER".format(attribute))
-		print ("----------------------------------------------------------")
-		print(smallerWorkflow)
-		print("-----------------------------------------------------------")
-		for item in diffSmall :
-			print (item)
-		print()
-		print(biggerWorkflow)
-		print("-----------------------------------------------------------")
-		for item in diffBig : 
-			print(item)
-		print("\n")
-
 def createInputOutputArray(elements) :
 	temp =[]
 	if(isinstance(elements, dict)) :
