@@ -6,7 +6,7 @@ import cwltool
 import subprocess
 import cwlbrowser.workflow as wf
 import cwlbrowser.util as util
-from IPython.display import SVG, display
+from IPython.display import SVG, display, HTML
 import time
 import os
 
@@ -153,6 +153,26 @@ def postExistingWorkflowGraph(link) :
 		req = req.json()     
 		display(SVG(BASE_URL + req['visualisationSvg']))
 
+def displayTable(workflow) :
+	print("\n {} INPUTS:".format(workflow.name))
+	tabulate(workflow.inputs)
+	print("\n {} OUTPUTS:".format(workflow.name))
+	tabulate(workflow.outputs)
+	print("\n {} STEPS:".format(workflow.name))
+	tabulate(workflow.steps, step=True)
+
+
+def tabulate(list_, step=False) :
+	data = ""
+	if step == False :
+		attr = "Type"
+		for i in list_ :
+			data = data + ("<tr><td>{}</td><td>{}</td></tr>".format(i.name, i.type))
+	else :
+		attr = "Run"
+		for i in list_ :
+			data = data + ("<tr><td>{}</td><td>{}</td></tr>".format(i.name, i.run))
+	display(HTML('<table><tr><td>Name</td><td>{}</td></tr>{}</table>'.format(attr, data)))
 
 def compareNoOfInputs(workflow1, workflow2):
     util.compare(workflow1.name, workflow2.name, workflow1.inputs, workflow2.inputs, "inputs")

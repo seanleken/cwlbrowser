@@ -2,5 +2,6 @@
 *.egg-info
 build/*
 dist/*
-cwlbrowser/test/doc/*
-cwlbrowser/test/parser.py
+cwlbrowser/doc/*
+cwlbrowser/parser.py
+
