@@ -1,3 +1,5 @@
+import itertools
+from IPython.display import SVG, display, HTML
 STEPS_WEIGHTING = 70
 IO_WEIGHTING = 15
 
@@ -16,6 +18,7 @@ class SimilarityChecker:
 
 
 	def similarityCheck(self, workflow1, workflow2):
+		#TODO: put the display of stats in a different method
 		self.workflow1 = workflow1
 		self.workflow2 = workflow2
 		stepSimilarity = self.similarityCheckSteps()
@@ -48,6 +51,27 @@ class SimilarityChecker:
 		self.outputsThatDifferWorkflow1 = diff1
 		self.outputsThatDifferWorkflow2 = diff2
 		return self.getPercentageMatch(workflow1Outputs, workflow2Outputs, IO_WEIGHTING)
+
+	def displayStats(self) :
+		self.tabulate()
+		print("Overall match: {}".format(self.overallMatch))
+
+	def tabulate(self) :
+		data = ""
+		styleI = ""
+		styleJ = ""
+		uncolored = 'style="border: 1px solid black"' 
+		green = 'style="border: 1px solid black; background-color:limegreen"'
+		red = 'style="border: 1px solid black; background-color:red"'
+		caption = "<caption>{} and {} inputs</caption>".format(self.workflow1.name, self.workflow2.name)
+		for i, j in itertools.zip_longest(self.workflow1.getInputsByName(), self.workflow2.getInputsByName()) :
+			styleI = green if not (i in self.inputsThatDifferWorkflow1) else red
+			styleJ = green if not (j in self.inputsThatDifferWorkflow2) else red
+			(i, styleI) = (i, styleI)  if not(i == None) else ("", uncolored)
+			(j, styleJ) = (j, styleJ) if not(j == None) else ("", uncolored)
+			data = data + ('<tr><td {}>{}</td><td {}>{}</td></tr>'.format(styleI, i, styleJ, j))
+		display(HTML('<table style="width:100%">{}<tr><th>{}</th><th>{}</th></tr>{}</table>'.format(caption, self.workflow1.name, self.workflow2.name, data)))
+
 
 
 	def getPercentageMatch(self, workflow1Attributes, workflow2Attributes, weighting) :

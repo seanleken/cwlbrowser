@@ -153,26 +153,31 @@ def postExistingWorkflowGraph(link) :
 		req = req.json()     
 		display(SVG(BASE_URL + req['visualisationSvg']))
 
-def displayTable(workflow) :
-	print("\n {} INPUTS:".format(workflow.name))
-	tabulate(workflow.inputs)
-	print("\n {} OUTPUTS:".format(workflow.name))
-	tabulate(workflow.outputs)
-	print("\n {} STEPS:".format(workflow.name))
-	tabulate(workflow.steps, step=True)
+def displayTables(workflow) :
+	caption = "\n {} INPUTS:".format(workflow.name)
+	tabulate(workflow.inputs, caption)
+	caption = "\n {} OUTPUTS:".format(workflow.name)
+	tabulate(workflow.outputs, caption)
+	caption = "\n {} STEPS:".format(workflow.name)
+	tabulate(workflow.steps, caption, step=True)
 
 
-def tabulate(list_, step=False) :
+def tabulate(list_, inputCaption, step=False) :
+	caption = '<caption>{}</caption>'.format(inputCaption)
+	page = "<html>" 
+	style = 'style= "border: 1px solid black"'
 	data = ""
 	if step == False :
 		attr = "Type"
 		for i in list_ :
-			data = data + ("<tr><td>{}</td><td>{}</td></tr>".format(i.name, i.type))
+			data = data + ("<tr {}><td {}>{}</td><td {}>{}</td></tr>".format(style, style, i.name, style, i.type))
 	else :
 		attr = "Run"
 		for i in list_ :
-			data = data + ("<tr><td>{}</td><td>{}</td></tr>".format(i.name, i.run))
-	display(HTML('<table><tr><td>Name</td><td>{}</td></tr>{}</table>'.format(attr, data)))
+			data = data + ("<tr {}><td {}>{}</td><td {}>{}</td></tr>".format(style, style, i.name, style,i.run))
+	page = page + '<body><table style="width:100%;border: 1px solid black">{}<tr><th {}>Name</th><th {}>{}</th></tr>{}</table></body>'.format(caption, style, style, attr, data)
+	page = page + "</html>"
+	display(HTML(page))
 
 def compareNoOfInputs(workflow1, workflow2):
     util.compare(workflow1.name, workflow2.name, workflow1.inputs, workflow2.inputs, "inputs")
