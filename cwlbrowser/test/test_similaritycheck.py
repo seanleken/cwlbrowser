@@ -50,17 +50,17 @@ class TestForIdenticalWorkflows(unittest.TestCase) :
 	def test_workflows_differing_by_one_input(self) :
 		similarityChecker.similarityCheck(lobstr, lobstrDifferentInput)
 		self.assertNotEqual(similarityChecker.getOverallMatch(), 100)
-		self.assertEqual(similarityChecker.getDifferingInputs(), ["p0", "p1"])
+		self.assertEqual(similarityChecker.inputSimilarityChecker.getDifferingItems(), ["p0", "p1"])
 
 	def test_workflows_differing_by_a_step(self) :
 		similarityChecker.similarityCheck(lobstr, lobstrDifferentStep)
 		self.assertNotEqual(similarityChecker.getOverallMatch(), 100)
-		self.assertEqual(similarityChecker.getDifferingSteps(), ["lobSTR", "lobSTR5"])
+		self.assertEqual(similarityChecker.stepSimilarityChecker.getDifferingItems(), ["lobSTR", "lobSTR5"])
 
 	def test_workflows_differing_by_an_output(self) :
 		similarityChecker.similarityCheck(lobstr, lobstrDifferentOutput)
 		self.assertNotEqual(similarityChecker.getOverallMatch(), 100)
-		self.assertEqual(similarityChecker.getDifferingOutputs(), ["bam", "bam45"])
+		self.assertEqual(similarityChecker.outputSimilarityChecker.getDifferingItems(), ["bam", "bam45"])
 
 	def test_completely_differing_workflows(self) :
 		similarityChecker.similarityCheck(lobstr, orfPrediction)

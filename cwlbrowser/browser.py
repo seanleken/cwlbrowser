@@ -6,8 +6,10 @@ import cwltool
 import subprocess
 import cwlbrowser.workflow as wf
 import cwlbrowser.util as util
+import cwlbrowser.similaritychecker as s
 from IPython.display import SVG, display, HTML
 import time
+import itertools
 import os
 
 
@@ -15,6 +17,7 @@ out_workflow = {}
 steps = []
 STEPS_WEIGHTING = 70
 IO_WEIGHTING = 15
+
 
 def retrieveFileThruLink(link, path):
 	req = requests.get(link)
@@ -153,16 +156,47 @@ def postExistingWorkflowGraph(link) :
 		req = req.json()     
 		display(SVG(BASE_URL + req['visualisationSvg']))
 
+
 def displayTables(workflow) :
 	caption = "\n {} INPUTS:".format(workflow.name)
-	tabulate(workflow.inputs, caption)
+	tabulateWorkflow(workflow.inputs, caption)
 	caption = "\n {} OUTPUTS:".format(workflow.name)
-	tabulate(workflow.outputs, caption)
+	tabulateWorkflow(workflow.outputs, caption)
 	caption = "\n {} STEPS:".format(workflow.name)
-	tabulate(workflow.steps, caption, step=True)
+	tabulateWorkflow(workflow.steps, caption, step=True)
+
+def displayStats(similarityChecker) :
+	tabulateSimChecker(similarityChecker)
+	print("Overall match: {}".format(similarityChecker.overallMatch))
+
+def tabulateSimChecker(similarityChecker) :
+	data = ""
+	caption = "<caption>{} and {} inputs</caption>".format(similarityChecker.workflow1.name, similarityChecker.workflow2.name)
+	tableBody = setColours(similarityChecker.workflow1.getInputsByName(), similarityChecker.workflow2.getInputsByName(),
+							similarityChecker.inputSimilarityChecker.differencesWorkflow1, 
+							similarityChecker.inputSimilarityChecker.differencesWorkflow2)
+	data = data + tableBody
+	display(HTML('<table style="width:100%">{}<tr><th>{}</th><th>{}</th></tr>{}</table>'.format(caption, similarityChecker.workflow1.name, similarityChecker.workflow2.name, data)))
 
 
-def tabulate(list_, inputCaption, step=False) :
+def setColours(worklow1Attributes, workflow2Attributes, workflow1Diff, workflow2Diff) :
+	tableBody = ""
+	styleI = ""
+	styleJ = ""
+	uncolored = 'style="border: 1px solid black"' 
+	green = 'style="border: 1px solid black; background-color:limegreen"'
+	red = 'style="border: 1px solid black; background-color:red"'
+	for i, j in itertools.zip_longest(worklow1Attributes, workflow2Attributes) :
+		styleI = green if not (i in workflow1Diff) else red
+		styleJ = green if not (j in workflow2Diff) else red
+		(i, styleI) = (i, styleI)  if not(i == None) else ("", uncolored)
+		(j, styleJ) = (j, styleJ) if not(j == None) else ("", uncolored)
+		tableBody = tableBody + ('<tr><td {}>{}</td><td {}>{}</td></tr>'.format(styleI, i, styleJ, j))
+	return tableBody
+
+
+
+def tabulateWorkflow(list_, inputCaption, step=False) :
 	caption = '<caption>{}</caption>'.format(inputCaption)
 	page = "<html>" 
 	style = 'style= "border: 1px solid black"'
