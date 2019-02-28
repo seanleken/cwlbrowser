@@ -6,6 +6,8 @@ class BasicSimilarityChecker:
 		self.attribute = []
 		self.workflow1= []
 		self.workflow2 = []
+		self.fullListWorkflow1 = []
+		self.fullListWorkflow2 = []
 		self.differencesWorkflow1 = {}
 		self.differencesWorkflow2 = {}
 		self.matchingItems = []
@@ -16,12 +18,16 @@ class BasicSimilarityChecker:
 		self.workflow1 = workflow1
 		self.workflow2 = workflow2
 		if (attribute == "inputs") :
-			self.similarityCheck(workflow1.getInputsByName(), workflow2.getInputsByName())
+			self.fullListWorkflow1 = workflow1.getInputsByName()
+			self.fullListWorkflow2 = workflow2.getInputsByName()
 		elif (attribute == "outputs") :
-			self.similarityCheck(workflow1.getOutputsByName(), workflow2.getOutputsByName())
+			self.fullListWorkflow1 = workflow1.getOutputsByName()
+			self.fullListWorkflow2 = workflow2.getOutputsByName()
 		else :
-			self.similarityCheck(workflow1.getStepsByName(), workflow2.getStepsByName())
-
+			self.fullListWorkflow1 = workflow1.getStepsByName()
+			self.fullListWorkflow2 = workflow2.getStepsByName()
+		self.similarityCheck(self.fullListWorkflow1, self.fullListWorkflow2)
+		
 	def similarityCheck(self, workflow1Attributes, workflow2Attributes):
 		if self.attribute == "steps" :
 			weighting = STEP_WEIGHTING

@@ -166,15 +166,18 @@ def displayTables(workflow) :
 	tabulateWorkflow(workflow.steps, caption, step=True)
 
 def displayStats(similarityChecker) :
-	tabulateSimChecker(similarityChecker)
+	tabulateSimChecker(similarityChecker.inputSimilarityChecker)
+	tabulateSimChecker(similarityChecker.outputSimilarityChecker)
+	tabulateSimChecker(similarityChecker.stepSimilarityChecker)
 	print("Overall match: {}".format(similarityChecker.overallMatch))
 
 def tabulateSimChecker(similarityChecker) :
+	caption = "<caption>{} and {} {}</caption>".format(similarityChecker.workflow1.name, 
+														similarityChecker.workflow2.name, similarityChecker.attribute)
 	data = ""
-	caption = "<caption>{} and {} inputs</caption>".format(similarityChecker.workflow1.name, similarityChecker.workflow2.name)
-	tableBody = setColours(similarityChecker.workflow1.getInputsByName(), similarityChecker.workflow2.getInputsByName(),
-							similarityChecker.inputSimilarityChecker.differencesWorkflow1, 
-							similarityChecker.inputSimilarityChecker.differencesWorkflow2)
+	tableBody = setColours(similarityChecker.fullListWorkflow1, similarityChecker.fullListWorkflow2,
+							similarityChecker.differencesWorkflow1, 
+							similarityChecker.differencesWorkflow2)
 	data = data + tableBody
 	display(HTML('<table style="width:100%">{}<tr><th>{}</th><th>{}</th></tr>{}</table>'.format(caption, similarityChecker.workflow1.name, similarityChecker.workflow2.name, data)))
 
