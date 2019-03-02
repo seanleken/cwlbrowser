@@ -5,9 +5,9 @@ UNKNOWN = "not known"
 class Workflow:
 	def __init__(self, name, workflow):
 		self.name = name;
-		self.inputs = self.createInputOutputArray(workflow["inputs"])
-		self.outputs = self.createInputOutputArray(workflow["outputs"])
-		self.steps = self.createStepArray(workflow["steps"])
+		self.inputs = [] if not "inputs"  in workflow else self.createInputOutputArray(workflow["inputs"])
+		self.outputs = [] if not "outputs" in workflow else self.createInputOutputArray(workflow["outputs"])
+		self.steps = [] if not "steps" in workflow else self.createStepArray(workflow["steps"])
 
 	def createStepArray(self, steps) :
 		temp = []
@@ -16,10 +16,12 @@ class Workflow:
 			for key, value in steps.items() :
 				stepObj = s.Step(value, name=key)
 				temp.append(stepObj)
-		else :
+		elif(isinstance(steps, list)) :
 			for step in steps :
 				stepObj = s.Step(step)
 				temp.append(stepObj)
+		else :
+			temp = []
 		return temp
 
 
@@ -28,39 +30,35 @@ class Workflow:
 
 
 	def getInputsByName(self) :
-		temp = []
-		for input_ in self.inputs :
-			temp.append(input_.name)
-		return temp
+		return self.getElementsByAttribute(self.inputs, "name")
 
 	def getInputsByType(self) :
-		temp = []
-		for input_ in self.inputs :
-			temp.append(input_.type)
-		return temp
+		return self.getElementsByAttribute(self.inputs, "type")
 
 	def getOutputsByName(self) :
-		temp = []
-		for output in self.outputs :
-			temp.append(output.name)
-		return temp
+		return self.getElementsByAttribute(self.outputs, "name")
 
 	def getOutputsByType(self) :
-		temp = []
-		for output in self.outputs :
-			temp.append(output.type)
-		return temp
+		return self.getElementsByAttribute(self.outputs, "type")
 
 	def getStepsByName(self) :
-		temp = []
-		for step in self.steps :
-			temp.append(step.name)
-		return temp
+		return self.getElementsByAttribute(self.steps, "name")
 
 	def getStepsByRun(self) :
+		return self.getElementsByAttribute(self.steps, "run")
+
+	def getElementsByAttribute(self, list_, attribute) :
 		temp = []
-		for step in self.steps :
-			temp.append(step.run)
+		if list_ != [] :
+			for item in list_ :
+				if attribute == "name":
+					temp.append(item.name)
+				elif attribute == "type" :
+					temp.append(item.type)
+				else  :
+					temp.append(item.run)
+		else :
+			temp = []
 		return temp
 
 

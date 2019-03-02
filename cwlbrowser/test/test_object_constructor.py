@@ -21,6 +21,9 @@ concordanceDict = {'class': 'Workflow', 'doc': 'Workflow to compare overlapping 
 							'inputs': [{'id': 'reference', 'type': 'File', 'secondaryFiles': ['^.dict', '.fai']}, {'id': 'eval', 'type': 'File', 'secondaryFiles': ['.tbi']}, {'id': 'truth', 'type': 'File', 'secondaryFiles': ['.tbi']}, {'id': 'summary', 'type': 'string'}], 'outputs': [{'id': 'concordance_summary', 'type': 'File', 'outputSource': 'GATKConcordance/concordance_summary'}], 'steps': [{'id': 'GATKConcordance', 'run': './GATKConcordance.yaml.cwl', 'in': 
 							[{'id': 'reference', 'source': 'reference'}, {'id': 'eval', 'source': 'eval'}, {'id': 'truth', 'source': 'truth'}, {'id': 'summary', 'source': 'summary'}], 'out': None}]}
 
+workflowNoInput = {'cwlVersion': 'v1.0', 'class': 'Workflow', 'label': 'Find reads with predicted coding sequences above 60 AA in length', 'requirements': [{'class': 'SchemaDefRequirement', 'types': [{'$import': '../tools/FragGeneScan-model.yaml'}]}], 'outputs': [], 
+					'steps': None, '$namespaces': {'edam': 'http://edamontology.org/', 's': 'http://schema.org/'}, '$schemas': ['http://edamontology.org/EDAM_1.16.owl', 'https://schema.org/docs/schema_org_rdfa.html'], 's:license': 'https://www.apache.org/licenses/LICENSE-2.0', 's:copyrightHolder': 'EMBL - European Bioinformatics Institute'}
+
 #Tests processing of workflows after being parsed by YAML parser
 class LobstrTest(unittest.TestCase) :
 	def setUp(self) :
@@ -104,6 +107,19 @@ class ConcordanceStepTest(unittest.TestCase) :
 		self.assertEqual(concordance_workflow.steps[0].getInputsByType(), self.expectedInputTypes)
 		self.assertEqual(concordance_workflow.steps[0].getOutputsByName(), self.expectedOutputs)
 		self.assertEqual(concordance_workflow.steps[0].getOutputsByType(), self.expectedOutputs)
+
+class NoInputsTest(unittest.TestCase) :
+	def setUp(self) :
+		self.workflowNoInput = workflowNoInput
+
+	def test_instantiation_no_input(self) :
+		workflowNoInput = wf.Workflow('no_input.cwl', self.workflowNoInput)
+		self.assertEqual(workflowNoInput.getInputsByName(), [])
+		self.assertEqual(workflowNoInput.getOutputsByName(), [])
+		self.assertEqual(workflowNoInput.getInputsByType(), [])
+		self.assertEqual(workflowNoInput.getOutputsByType(), [])
+		self.assertEqual(workflowNoInput.getStepsByName(), [])
+		self.assertEqual(workflowNoInput.getStepsByRun(), [])
 
 if __name__ == '__main__':
     unittest.main()
