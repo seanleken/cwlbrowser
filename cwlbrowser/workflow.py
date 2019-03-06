@@ -3,11 +3,12 @@ import cwlbrowser.step as s
 UNKNOWN = "not known"
 
 class Workflow:
-	def __init__(self, name, workflow):
+	def __init__(self, name, workflow, link="local"):
 		self.name = name;
 		self.inputs = [] if not "inputs"  in workflow else self.createInputOutputArray(workflow["inputs"])
 		self.outputs = [] if not "outputs" in workflow else self.createInputOutputArray(workflow["outputs"])
 		self.steps = [] if not "steps" in workflow else self.createStepArray(workflow["steps"])
+		self.link = link
 
 	def createStepArray(self, steps) :
 		temp = []

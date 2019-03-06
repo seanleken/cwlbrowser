@@ -17,7 +17,7 @@ out_workflow = {}
 steps = []
 STEPS_WEIGHTING = 70
 IO_WEIGHTING = 15
-
+workflowlink = []
 
 def retrieveFileThruLink(link, path):
 	req = requests.get(link)
@@ -33,14 +33,14 @@ def retrieveFileThruLink(link, path):
 		try:
 			out_workflow = yaml.safe_load(content)
 			#print (out_workflow)
-			return wf.Workflow(path, out_workflow)
+			return wf.Workflow(path, out_workflow, workflowlink)
 		except (yaml.YAMLError) as yamlError:
 			print ("Error in loading the cwl file")
 			print (yamlError)
 
 #If you are passing the workflow argument as a link make sure that you also
 #pass the argument True to indicate that
-def load(workflow, link=False):
+def load(workflow, link=True):
 	if(link == False):
 		global out_workflow
 		if os.path.exists(workflow):
@@ -58,6 +58,8 @@ def load(workflow, link=False):
 
 #loads workflow when given full url
 def loadWithLink(link) :
+	global workflowlink
+	workflowlink = link
 	lhs, rhs = link.split("/blob/", 1)
 	branch, path = rhs.split("/", 1)
 	ownerrepo = lhs.replace('https://github.com', "")
@@ -88,10 +90,10 @@ def displayGraph(workflow, type="link"):
 		}
 
 		addResponse = requests.post(BASE_URL + '/workflows', 
-								data={'url': workflow},		
+								data={'url': workflow.link},		
 								headers=HEADERS)
 		if (addResponse.status_code == 200) :
-			postExistingWorkflowGraph(workflow)
+			postExistingWorkflowGraph(workflow.link)
 		elif (addResponse.status_code == requests.codes.accepted):
 			qLocation = addResponse.headers['location']
 
