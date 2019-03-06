@@ -1,5 +1,6 @@
 import cwlbrowser.util as util
 import cwlbrowser.step as s
+import cwlbrowser.browser as c
 UNKNOWN = "not known"
 
 class Workflow:
@@ -9,6 +10,7 @@ class Workflow:
 		self.outputs = [] if not "outputs" in workflow else self.createInputOutputArray(workflow["outputs"])
 		self.steps = [] if not "steps" in workflow else self.createStepArray(workflow["steps"])
 		self.link = link
+		self.parent = []
 
 	def createStepArray(self, steps) :
 		temp = []
@@ -25,9 +27,23 @@ class Workflow:
 			temp = []
 		return temp
 
+	def loadStep(self, run) :
+		if run not in self.getStepsByRun():
+			raise Exception('{} is not a step in {}'.format(run, self.name))
+		else :
+			stepLink = util.constructLink(self.link, run)
+			print(stepLink)
+			step = c.loadWithLink(stepLink)
+			step.setParent(self)
+			return step
+
+
 
 	def createInputOutputArray(self, elements) :
 		return util.createInputOutputArray(elements)
+
+	def setParent(self, parent) :
+		self.parent = parent
 
 
 	def getInputsByName(self) :

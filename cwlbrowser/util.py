@@ -50,6 +50,19 @@ def createInputOutputArray(elements) :
 	return temp
 
 
+def constructLink(parentLink, link) :
+	parentlhs, parentrhs = parentLink.rsplit('/', 1)
+	if('/' in link) :
+		lhs, rhs = link.split('/', 1)
+		if(lhs == '..') :
+			root, path = parentlhs.rsplit('/', 1)
+			finalLink = root + '/' + rhs
+		else :
+			finalLink = ""
+	else :
+		finalLink = parentlhs + '/' + link
+	return finalLink
+
 
 
 
