@@ -159,13 +159,28 @@ def postExistingWorkflowGraph(link) :
 		display(SVG(BASE_URL + req['visualisationSvg']))
 
 
-def displayTables(workflow) :
-	caption = "\n {} INPUTS:".format(workflow.name)
-	tabulateWorkflow(workflow.inputs, caption)
-	caption = "\n {} OUTPUTS:".format(workflow.name)
-	tabulateWorkflow(workflow.outputs, caption)
-	caption = "\n {} STEPS:".format(workflow.name)
-	tabulateWorkflow(workflow.steps, caption, step=True)
+def displayTables(workflow, attr='All') :
+	if attr == 'All':
+		caption = "\n {} INPUTS:".format(workflow.name)
+		tabulateWorkflow(workflow.inputs, caption)
+		caption = "\n {} OUTPUTS:".format(workflow.name)
+		tabulateWorkflow(workflow.outputs, caption)
+		caption = "\n {} STEPS:".format(workflow.name)
+		tabulateWorkflow(workflow.steps, caption, step=True)
+
+	elif attr == 'inputs':
+		caption = "\n {} INPUTS:".format(workflow.name)
+		tabulateWorkflow(workflow.inputs, caption)
+
+	elif attr == 'outputs' :
+		caption = "\n {} OUTPUTS:".format(workflow.name)
+		tabulateWorkflow(workflow.outputs, caption)
+
+	else :
+		caption = "\n {} STEPS:".format(workflow.name)
+		tabulateWorkflow(workflow.steps, caption, step=True)
+
+
 
 def displayStats(similarityChecker) :
 	tabulateSimChecker(similarityChecker.inputSimilarityChecker)
