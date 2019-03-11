@@ -179,21 +179,21 @@ def tabulateSimChecker(similarityChecker) :
 	data = ""
 	tableBody = setColours(similarityChecker.fullListWorkflow1, similarityChecker.fullListWorkflow2,
 							similarityChecker.differencesWorkflow1, 
-							similarityChecker.differencesWorkflow2)
+							similarityChecker.differencesWorkflow2, similarityChecker.attribute)
 	data = data + tableBody
 	display(HTML('<table style="width:100%">{}<tr><th>{}</th><th>{}</th></tr>{}</table>'.format(caption, similarityChecker.workflow1.name, similarityChecker.workflow2.name, data)))
 
 
-def setColours(worklow1Attributes, workflow2Attributes, workflow1Diff, workflow2Diff) :
+def setColours(worklow1Attributes, workflow2Attributes, workflow1Diff, workflow2Diff, attr) :
 	tableBody = ""
 	styleI = ""
 	styleJ = ""
 	uncolored = 'style="border: 1px solid black"' 
 	green = 'style="border: 1px solid black; background-color:limegreen"'
-	red = 'style="border: 1px solid black; background-color:red"'
+	diff = 'style="border: 1px solid black; background-color:{}"'.format("yellow" if not attr == 'steps' else "red")
 	for i, j in itertools.zip_longest(worklow1Attributes, workflow2Attributes) :
-		styleI = green if not (i in workflow1Diff) else red
-		styleJ = green if not (j in workflow2Diff) else red
+		styleI = green if not (i in workflow1Diff) else diff
+		styleJ = green if not (j in workflow2Diff) else diff
 		(i, styleI) = (i, styleI)  if not(i == None) else ("", uncolored)
 		(j, styleJ) = (j, styleJ) if not(j == None) else ("", uncolored)
 		tableBody = tableBody + ('<tr><td {}>{}</td><td {}>{}</td></tr>'.format(styleI, i, styleJ, j))
