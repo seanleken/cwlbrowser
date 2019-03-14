@@ -1,9 +1,10 @@
 # CWL Browser
 ## This a python library that allows you to open, browse and compare workflows written in CWL on a Jupyter notebook
 
-### Main functions
-####load(workflow, link=True)
-worklow - GitHub link to workflow or path to workflow if it is local
-link - parameter to indicate to function that a link is being passed as a parameter
-if you are passing the path to the local location of the workflow set this to False
+## Main functions
+
+*  load(workflow, link)
+    *  workflow - The GitHub link or local path to the .cwl file. 
+    *  link - Indicates whether the argument passed is a link to the workflow or a local path. It is set to True as default. If it is the local path set this to False
+
 
