@@ -32,7 +32,6 @@ class Workflow:
 			raise Exception('{} is not a step in {}'.format(run, self.name))
 		else :
 			stepLink = util.constructLink(self.link, run)
-			print(stepLink)
 			step = c.loadWithLink(stepLink)
 			step.setParent(self)
 			return step
